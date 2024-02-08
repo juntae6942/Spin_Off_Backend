@@ -47,14 +47,14 @@ public class MemberController {
     } // 회원 로그인
 
 
-    @PostMapping("/checkDuplicateMemberId")
+    @PostMapping("/checkDuplicate")
     public ResponseEntity<Boolean> checkDuplicate(@RequestBody HashMap<String,String> member) {
         String memberId = member.get("memberId");
-        Optional<Member> byMemberId = memberService.findByEmail(memberId);
-
         log.info(memberId);
 
-        if(byMemberId.isEmpty()){
+        Optional<Member> byMember = memberService.findByMemberId(memberId);
+
+        if(byMember.isEmpty()){
             return ResponseEntity.ok(true);
         } else {
             return ResponseEntity.ok(false);

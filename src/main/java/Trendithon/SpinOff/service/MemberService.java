@@ -35,7 +35,7 @@ public class MemberService {
 
     @Transactional
     public ResponseEntity<Boolean> signUp(SignUpDto memberDto) {
-        if(memberJpaRepository.findByEmail(memberDto.getEmail()).orElse(null)!=null) {
+        if(memberJpaRepository.findByMemberId(memberDto.getMemberId()).orElse(null)!=null) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다.");
         }
 
@@ -44,6 +44,7 @@ public class MemberService {
                 .build();
 
         Member member = Member.builder()
+                .memberId(memberDto.getMemberId())
                 .email(memberDto.getEmail())
                 .name(memberDto.getName())
                 .authority(authority)
@@ -71,6 +72,10 @@ public class MemberService {
 
     public Optional<Member> findByEmail(String email) {
         return memberJpaRepository.findByEmail(email);
+    }
+
+    public Optional<Member> findByMemberId(String memberId) {
+        return memberJpaRepository.findByMemberId(memberId);
     }
 
     public boolean isValidEmail(String email) {

@@ -28,7 +28,7 @@ public class TokenService {
 
     public ResponseEntity<TokenDto> makeToken(LoginDto loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+                new UsernamePasswordAuthenticationToken(loginDto.getMemberId(), loginDto.getPassword());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         log.info("authentication = {}", authentication.getName());
 

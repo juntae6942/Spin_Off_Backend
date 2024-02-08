@@ -17,6 +17,7 @@ public class Member {
     private Long id;
     private String name;
     private String email;
+    private String memberId;
     private String password;
     @ManyToOne(cascade = CascadeType.ALL)
     private Authority authority;

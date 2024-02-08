@@ -28,24 +28,24 @@ public class LoginService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return memberJpaRepository.findOneWithAuthorityByEmail(email)
-                .map(member -> createMember(email, member))
-                .orElseThrow(()->new UsernameNotFoundException(email + " -> 데이터베이스에서 찾을 수 없습니다."));
+    public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
+        return memberJpaRepository.findOneWithAuthorityByMemberId(memberId)
+                .map(member -> createMember(memberId, member))
+                .orElseThrow(()->new UsernameNotFoundException(memberId + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
 
     private User createMember(String memberName, Member member) {
         if (!member.isActivated()) {
             throw new RuntimeException(memberName + " -> 활성화되어 있지 않습니다.");
         }
-        List<GrantedAuthority> grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(member.getAuthority().getAuthority()));
-
+        List<GrantedAuthority> grantedAuthorities =
+                Collections.singletonList(new SimpleGrantedAuthority(member.getAuthority().getAuthority()));
         return new User(member.getEmail(), member.getPassword(), grantedAuthorities);
     }
 
     @Transactional
-    public Optional<Member> getMemberWithAuthorities(String email) {
-        return memberJpaRepository.findOneWithAuthorityByEmail(email);
+    public Optional<Member> getMemberWithAuthorities(String memberId) {
+        return memberJpaRepository.findOneWithAuthorityByMemberId(memberId);
     }
 
     /*@Transactional
