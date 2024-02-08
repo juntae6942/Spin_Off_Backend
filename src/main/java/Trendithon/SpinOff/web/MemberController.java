@@ -1,6 +1,6 @@
 package Trendithon.SpinOff.web;
 
-import Trendithon.SpinOff.domain.Member;
+import Trendithon.SpinOff.domain.member.Member;
 import Trendithon.SpinOff.service.MemberService;
 import Trendithon.SpinOff.service.TokenService;
 import Trendithon.SpinOff.domain.dto.LoginDto;

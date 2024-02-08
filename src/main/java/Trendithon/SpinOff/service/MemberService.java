@@ -1,7 +1,7 @@
 package Trendithon.SpinOff.service;
 
-import Trendithon.SpinOff.domain.Authority;
-import Trendithon.SpinOff.domain.Member;
+import Trendithon.SpinOff.domain.member.Authority;
+import Trendithon.SpinOff.domain.member.Member;
 import Trendithon.SpinOff.repository.MemberJpaRepository;
 import Trendithon.SpinOff.domain.dto.SignUpDto;
 import lombok.extern.slf4j.Slf4j;

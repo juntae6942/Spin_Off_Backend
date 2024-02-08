@@ -1,6 +1,6 @@
 package Trendithon.SpinOff.service;
 
-import Trendithon.SpinOff.domain.Member;
+import Trendithon.SpinOff.domain.member.Member;
 import Trendithon.SpinOff.repository.MemberJpaRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
