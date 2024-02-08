@@ -1,4 +1,4 @@
-package Trendithon.SpinOff.web.dto;
+package Trendithon.SpinOff.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

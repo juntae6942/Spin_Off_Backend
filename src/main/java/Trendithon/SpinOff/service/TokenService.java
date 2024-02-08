@@ -2,8 +2,8 @@ package Trendithon.SpinOff.service;
 
 import Trendithon.SpinOff.domain.token.TokenProvider;
 import Trendithon.SpinOff.filter.JwtFilter;
-import Trendithon.SpinOff.web.dto.LoginDto;
-import Trendithon.SpinOff.web.dto.TokenDto;
+import Trendithon.SpinOff.domain.dto.LoginDto;
+import Trendithon.SpinOff.domain.dto.TokenDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

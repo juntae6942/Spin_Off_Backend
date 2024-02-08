@@ -3,9 +3,9 @@ package Trendithon.SpinOff.web;
 import Trendithon.SpinOff.domain.Member;
 import Trendithon.SpinOff.service.MemberService;
 import Trendithon.SpinOff.service.TokenService;
-import Trendithon.SpinOff.web.dto.LoginDto;
-import Trendithon.SpinOff.web.dto.SignUpDto;
-import Trendithon.SpinOff.web.dto.TokenDto;
+import Trendithon.SpinOff.domain.dto.LoginDto;
+import Trendithon.SpinOff.domain.dto.SignUpDto;
+import Trendithon.SpinOff.domain.dto.TokenDto;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 

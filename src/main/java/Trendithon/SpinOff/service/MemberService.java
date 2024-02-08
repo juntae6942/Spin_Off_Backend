@@ -3,7 +3,7 @@ package Trendithon.SpinOff.service;
 import Trendithon.SpinOff.domain.Authority;
 import Trendithon.SpinOff.domain.Member;
 import Trendithon.SpinOff.repository.MemberJpaRepository;
-import Trendithon.SpinOff.web.dto.SignUpDto;
+import Trendithon.SpinOff.domain.dto.SignUpDto;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
