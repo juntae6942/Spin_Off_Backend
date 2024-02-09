@@ -41,7 +41,6 @@ public class MemberService {
         if(memberJpaRepository.findByMemberId(memberDto.getMemberId()).orElse(null)!=null) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다.");
         }
-
         Authority authority = authorityJpaRepository.findByAuthority("ROLE_USER")
                 .orElseGet(() -> Authority.builder()
                 .authority("ROLE_USER")
