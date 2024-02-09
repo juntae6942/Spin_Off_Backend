@@ -2,6 +2,7 @@ package Trendithon.SpinOff.service;
 
 import Trendithon.SpinOff.domain.member.Authority;
 import Trendithon.SpinOff.domain.member.Member;
+import Trendithon.SpinOff.repository.AuthorityJpaRepository;
 import Trendithon.SpinOff.repository.MemberJpaRepository;
 import Trendithon.SpinOff.domain.dto.SignUpDto;
 import lombok.extern.slf4j.Slf4j;
@@ -26,11 +27,13 @@ public class MemberService {
 
     private final MemberJpaRepository memberJpaRepository;//멤버 저장소
     private final PasswordEncoder passwordEncoder;
+    private final AuthorityJpaRepository authorityJpaRepository;
 
     @Autowired
-    public MemberService(MemberJpaRepository memberJpaRepository, PasswordEncoder passwordEncoder) {
+    public MemberService(MemberJpaRepository memberJpaRepository, PasswordEncoder passwordEncoder, AuthorityJpaRepository authorityJpaRepository) {
         this.memberJpaRepository = memberJpaRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authorityJpaRepository = authorityJpaRepository;
     }
 
     @Transactional
@@ -39,9 +42,10 @@ public class MemberService {
             throw new RuntimeException("이미 가입되어 있는 유저입니다.");
         }
 
-        Authority authority = Authority.builder()
+        Authority authority = authorityJpaRepository.findByAuthority("ROLE_USER")
+                .orElseGet(() -> Authority.builder()
                 .authority("ROLE_USER")
-                .build();
+                .build());
 
         Member member = Member.builder()
                 .memberId(memberDto.getMemberId())
