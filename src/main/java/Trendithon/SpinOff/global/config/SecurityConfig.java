@@ -1,8 +1,8 @@
-package Trendithon.SpinOff.config;
+package Trendithon.SpinOff.global.config;
 
-import Trendithon.SpinOff.domain.token.TokenProvider;
-import Trendithon.SpinOff.domain.token.exception.JwtAccessDeniedHandler;
-import Trendithon.SpinOff.domain.token.exception.JwtAuthenticationEntryPoint;
+import Trendithon.SpinOff.global.jwt.entity.TokenProvider;
+import Trendithon.SpinOff.global.jwt.exception.JwtAccessDeniedHandler;
+import Trendithon.SpinOff.global.jwt.exception.JwtAuthenticationEntryPoint;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

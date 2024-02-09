@@ -1,4 +1,4 @@
-package Trendithon.SpinOff.domain.token;
+package Trendithon.SpinOff.global.jwt.entity;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

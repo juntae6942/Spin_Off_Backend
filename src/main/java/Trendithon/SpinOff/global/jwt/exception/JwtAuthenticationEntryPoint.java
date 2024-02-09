@@ -1,4 +1,4 @@
-package Trendithon.SpinOff.domain.token.exception;
+package Trendithon.SpinOff.global.jwt.exception;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package Trendithon.SpinOff.domain.member;
+package Trendithon.SpinOff.global.jwt.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

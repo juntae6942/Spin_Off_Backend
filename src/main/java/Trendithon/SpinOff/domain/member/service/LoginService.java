@@ -1,7 +1,7 @@
-package Trendithon.SpinOff.service;
+package Trendithon.SpinOff.domain.member.service;
 
-import Trendithon.SpinOff.domain.member.Member;
-import Trendithon.SpinOff.repository.MemberJpaRepository;
+import Trendithon.SpinOff.domain.member.entity.Member;
+import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

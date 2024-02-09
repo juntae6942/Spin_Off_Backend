@@ -1,7 +1,7 @@
-package Trendithon.SpinOff.config;
+package Trendithon.SpinOff.global.config;
 
-import Trendithon.SpinOff.domain.token.TokenProvider;
-import Trendithon.SpinOff.filter.JwtFilter;
+import Trendithon.SpinOff.global.jwt.entity.TokenProvider;
+import Trendithon.SpinOff.global.jwt.filter.JwtFilter;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;

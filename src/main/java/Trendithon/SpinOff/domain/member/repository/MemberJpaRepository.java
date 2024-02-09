@@ -1,6 +1,6 @@
-package Trendithon.SpinOff.repository;
+package Trendithon.SpinOff.domain.member.repository;
 
-import Trendithon.SpinOff.domain.member.Member;
+import Trendithon.SpinOff.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

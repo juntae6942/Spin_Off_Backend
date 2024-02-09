@@ -1,6 +1,6 @@
-package Trendithon.SpinOff.filter;
+package Trendithon.SpinOff.global.jwt.filter;
 
-import Trendithon.SpinOff.domain.token.TokenProvider;
+import Trendithon.SpinOff.global.jwt.entity.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;

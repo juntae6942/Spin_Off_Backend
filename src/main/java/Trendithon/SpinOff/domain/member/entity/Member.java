@@ -1,5 +1,6 @@
-package Trendithon.SpinOff.domain.member;
+package Trendithon.SpinOff.domain.member.entity;
 
+import Trendithon.SpinOff.global.jwt.entity.Authority;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +23,8 @@ public class Member {
     @ManyToOne(cascade = CascadeType.ALL)
     private Authority authority;
     private Boolean activate;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    private Profile profile;
     public boolean isActivated() {
         return activate;
     }
