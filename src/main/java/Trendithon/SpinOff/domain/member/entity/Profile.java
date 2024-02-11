@@ -17,6 +17,10 @@ public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String introduce;
+    private String job;
+    private String specificDuty;
     @OneToMany
     private Set<Technic> technics;
+    private String link;
 }

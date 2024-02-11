@@ -1,11 +1,9 @@
 package Trendithon.SpinOff.domain.member.controller;
 
-import Trendithon.SpinOff.domain.member.dto.TechnicDto;
+import Trendithon.SpinOff.domain.member.dto.*;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.service.MemberService;
 import Trendithon.SpinOff.global.jwt.service.TokenService;
-import Trendithon.SpinOff.domain.member.dto.LoginDto;
-import Trendithon.SpinOff.domain.member.dto.SignUpDto;
 import Trendithon.SpinOff.global.jwt.dto.TokenDto;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +36,7 @@ public class MemberController {
     public ResponseEntity<Boolean> signUp(@Validated @RequestBody SignUpDto signUpDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             log.info("아이디 혹은 비밀번호를 잘못입력했습니다.");
+            return ResponseEntity.ok(false);
         }
         return memberService.signUp(signUpDto);
     }   // 회원가입
@@ -48,7 +47,7 @@ public class MemberController {
     } // 회원 로그인
 
 
-    @PostMapping("/checkDuplicate")
+    @PostMapping("/memberId/check")
     public ResponseEntity<Boolean> checkDuplicate(@RequestBody HashMap<String,String> member) {
         String memberId = member.get("memberId");
         log.info(memberId);
@@ -66,6 +65,12 @@ public class MemberController {
     public ResponseEntity<Boolean> addTechnic(@RequestBody TechnicDto technicDto) {
         log.info("멤버 아이디 = {}", technicDto.getMemberId());
         boolean result = memberService.addTechnic(technicDto.getMemberId(), technicDto.getTechnics());
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("information/add")
+    public ResponseEntity<Boolean> addJob(@RequestBody Information information) {
+        boolean result = memberService.addInformation(information);
         return ResponseEntity.ok(result);
     }
 }

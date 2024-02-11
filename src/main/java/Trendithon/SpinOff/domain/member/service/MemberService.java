@@ -1,5 +1,6 @@
 package Trendithon.SpinOff.domain.member.service;
 
+import Trendithon.SpinOff.domain.member.dto.Information;
 import Trendithon.SpinOff.global.jwt.entity.Authority;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.entity.Profile;
@@ -48,7 +49,6 @@ public class MemberService {
                 .orElseGet(() -> Authority.builder()
                 .authority("ROLE_USER")
                 .build());
-
         Profile profile = Profile.builder().technics(new HashSet<>()).build();
         Member member = Member.builder()
                 .memberId(memberDto.getMemberId())
@@ -59,15 +59,10 @@ public class MemberService {
                 .activate(true)
                 .password(passwordEncoder.encode(memberDto.getPassword()))
                 .build();
-
         log.info(member.getEmail());
-
-
         Member save = memberJpaRepository.save(member);
-
         log.info("멤버 저장 됨 {}",save.getId());
         log.info(save.getPassword());
-
         return ResponseEntity.ok(true);
     }
 
@@ -77,22 +72,20 @@ public class MemberService {
         Optional<Member> optionalMember = memberJpaRepository.findByMemberId(memberId);
         if (optionalMember.isPresent()) {
            Member member = optionalMember.get();
-            technics.stream().filter(technic -> technicJpaRepository.findByTechnicName(technic).isEmpty())
+           technics.stream().filter(technic -> technicJpaRepository.findByTechnicName(technic).isEmpty())
                     .forEach(technic -> technicJpaRepository.save(Technic.builder()
                     .technicName(technic).build()));
-            Set<Technic> existTechnics = member.getProfile().getTechnics();
-            Set<Technic> newTechnics = technics.stream()
+           Set<Technic> existTechnics = member.getProfile().getTechnics();
+           Set<Technic> newTechnics = technics.stream()
                     .map(technicName -> technicJpaRepository.findByTechnicName(technicName)
                             .orElseGet(() -> Technic.builder().technicName(technicName).build()))
                     .collect(Collectors.toSet());
-            for (Technic newTechnic : newTechnics) {
-                if (!existTechnics.contains(newTechnic)) {
+           for (Technic newTechnic : newTechnics) {
+               if (!existTechnics.contains(newTechnic)) {
                    member.getProfile().getTechnics().add(newTechnic);
-                }
-
-            }
-
-            memberJpaRepository.save(member);
+               }
+           }
+           memberJpaRepository.save(member);
         } else {
             log.error("Member NotFound");
             return false;
@@ -124,5 +117,19 @@ public class MemberService {
     public boolean isValidPhone(String phone) {
         Matcher matcher = phonePattern.matcher(phone);
         return matcher.matches();
+    }
+
+    public boolean addInformation(Information information) {
+        Optional<Member> member = memberJpaRepository.findByMemberId(information.getMemberId());
+        if(member.isPresent()) {
+            Profile profile = member.get().getProfile();
+            profile.setIntroduce(information.getIntroduce());
+            profile.setJob(information.getJob());
+            profile.setSpecificDuty(information.getSpecificDuty());
+            profile.setLink(information.getLink());
+            profileJpaRepository.save(profile);
+            return true;
+        }
+        return false;
     }
 }
