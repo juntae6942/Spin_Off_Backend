@@ -61,16 +61,18 @@ public class MemberController {
         }
     }   // 회원 아이디 중복 검사
 
-    @PostMapping("/technic/add")
-    public ResponseEntity<Boolean> addTechnic(@RequestBody TechnicDto technicDto) {
-        log.info("멤버 아이디 = {}", technicDto.getMemberId());
-        boolean result = memberService.addTechnic(technicDto.getMemberId(), technicDto.getTechnics());
-        return ResponseEntity.ok(result);
+    @PostMapping("/information/add")
+    public ResponseEntity<Boolean> addInformation(@RequestBody Information information) {
+        log.info("멤버 아이디 = {}", information.getMemberId());
+        boolean resultInfo = memberService.addInformation(information);
+        boolean resultTechnic = memberService.addTechnic(information.getMemberId(), information.getTechnics());
+        return ResponseEntity.ok(resultInfo && resultTechnic);
     }
 
-    @PostMapping("information/add")
-    public ResponseEntity<Boolean> addJob(@RequestBody Information information) {
-        boolean result = memberService.addInformation(information);
-        return ResponseEntity.ok(result);
+    @PostMapping("information/edit")
+    public ResponseEntity<Boolean> editInformation(@RequestBody EditInformation editInformation) {
+        boolean result = memberService.editInformation(editInformation);
+        boolean resultTechnic = memberService.editTechnics(editInformation);
+        return ResponseEntity.ok(result && resultTechnic);
     }
 }

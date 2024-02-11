@@ -1,15 +1,14 @@
 package Trendithon.SpinOff.domain.member.service;
 
+import Trendithon.SpinOff.domain.member.dto.EditInformation;
 import Trendithon.SpinOff.domain.member.dto.Information;
+import Trendithon.SpinOff.domain.member.entity.ProfileTechnic;
+import Trendithon.SpinOff.domain.member.repository.*;
 import Trendithon.SpinOff.global.jwt.entity.Authority;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.entity.Profile;
 import Trendithon.SpinOff.domain.member.entity.Technic;
-import Trendithon.SpinOff.domain.member.repository.AuthorityJpaRepository;
-import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
 import Trendithon.SpinOff.domain.member.dto.SignUpDto;
-import Trendithon.SpinOff.domain.member.repository.ProfileJpaRepository;
-import Trendithon.SpinOff.domain.member.repository.TechnicJpaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,9 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -39,6 +36,7 @@ public class MemberService {
     private final AuthorityJpaRepository authorityJpaRepository;
     private final TechnicJpaRepository technicJpaRepository;
     private final ProfileJpaRepository profileJpaRepository;
+    private final ProfileTechnicJpaRepository profileTechnicJpaRepository;
 
     @Transactional
     public ResponseEntity<Boolean> signUp(SignUpDto memberDto) {
@@ -49,7 +47,13 @@ public class MemberService {
                 .orElseGet(() -> Authority.builder()
                 .authority("ROLE_USER")
                 .build());
-        Profile profile = Profile.builder().technics(new HashSet<>()).build();
+
+        Profile profile = Profile.builder()
+                .profileTechnic(ProfileTechnic.builder()
+                        .technics(new HashSet<>())
+                        .build())
+                .build();
+
         Member member = Member.builder()
                 .memberId(memberDto.getMemberId())
                 .email(memberDto.getEmail())
@@ -59,6 +63,7 @@ public class MemberService {
                 .activate(true)
                 .password(passwordEncoder.encode(memberDto.getPassword()))
                 .build();
+
         log.info(member.getEmail());
         Member save = memberJpaRepository.save(member);
         log.info("멤버 저장 됨 {}",save.getId());
@@ -67,42 +72,85 @@ public class MemberService {
     }
 
     public boolean addTechnic(String memberId, Set<String> technics) {
-        log.info("멤버 아이디 = {}", memberId);
-        log.info("기술 스택 = {}", technics);
         Optional<Member> optionalMember = memberJpaRepository.findByMemberId(memberId);
         if (optionalMember.isPresent()) {
-           Member member = optionalMember.get();
-           technics.stream().filter(technic -> technicJpaRepository.findByTechnicName(technic).isEmpty())
-                    .forEach(technic -> technicJpaRepository.save(Technic.builder()
-                    .technicName(technic).build()));
-           Set<Technic> existTechnics = member.getProfile().getTechnics();
-           Set<Technic> newTechnics = technics.stream()
-                    .map(technicName -> technicJpaRepository.findByTechnicName(technicName)
-                            .orElseGet(() -> Technic.builder().technicName(technicName).build()))
+            Member member = optionalMember.get();
+            Profile profile = member.getProfile();
+
+            Set<Technic> collects = technics.stream()
+                    .filter(technic -> technicJpaRepository.findByTechnicName(technic).isEmpty())
+                    .map(technic -> technicJpaRepository.save(Technic.builder()
+                            .technicName(technic)
+                            .build()))
                     .collect(Collectors.toSet());
-           for (Technic newTechnic : newTechnics) {
-               if (!existTechnics.contains(newTechnic)) {
-                   member.getProfile().getTechnics().add(newTechnic);
-               }
-           }
-           memberJpaRepository.save(member);
+
+            profile.getProfileTechnic().setTechnics(collects);
+            profileTechnicJpaRepository.save(profile.getProfileTechnic());
+            profileJpaRepository.save(profile);
+            return true;
         } else {
             log.error("Member NotFound");
             return false;
         }
+    }
+
+    public boolean editTechnics(EditInformation editInformation) {
+        Optional<Profile> optionalProfile = profileJpaRepository.findById(editInformation.getProfileId());
+        if (optionalProfile.isEmpty()) {
+            return false;
+        }
+
+        Profile profile = optionalProfile.get();
+        ProfileTechnic profileTechnic = profile.getProfileTechnic();
+        if (profileTechnic == null) {
+            return false;
+        }
+
+        Set<Technic> newTechnics = editInformation.getTechnics();
+        log.info("new {}", newTechnics);
+
+        for (Technic newTechnic : newTechnics) {
+            if(technicJpaRepository.findByTechnicName(newTechnic.getTechnicName()).isEmpty()) {
+                technicJpaRepository.save(newTechnic);
+            }
+        }
+
+        Set<Technic> collect = getTechnics(newTechnics);
+        log.info("collect = {}", collect);
+
+        profileTechnic.setTechnics(collect);
+        profileTechnicJpaRepository.save(profileTechnic);
+        profileJpaRepository.save(profile);
         return true;
     }
 
-    public Optional<Member> findById(Long id) {
-        return memberJpaRepository.findMemberById(id);
+    private Set<Technic> getTechnics(Set<Technic> newTechnics) {
+        return newTechnics.stream().map(technic -> technicJpaRepository
+                .findByTechnicName(technic.getTechnicName())
+                .orElseGet(() -> Technic.builder()
+                        .technicName(technic.getTechnicName())
+                        .build()
+                )).collect(Collectors.toSet());
     }
 
-    public Optional<Member> findByName(String name) {
-        return memberJpaRepository.findMemberByName(name);
+    public boolean addInformation(Information information) {
+        Optional<Member> member = memberJpaRepository.findByMemberId(information.getMemberId());
+        if(member.isPresent()) {
+            Profile profile = member.get().getProfile();
+            profile.add(information);
+            profileJpaRepository.save(profile);
+            return true;
+        }
+        return false;
     }
 
-    public Optional<Member> findByEmail(String email) {
-        return memberJpaRepository.findByEmail(email);
+    public boolean editInformation(EditInformation editInformation) {
+        Optional<Member> member = memberJpaRepository.findByMemberId(editInformation.getMemberId());
+        if (member.isPresent()) {
+            Profile profile = member.get().getProfile();
+            return profile.edit(editInformation);
+        }
+        return false;
     }
 
     public Optional<Member> findByMemberId(String memberId) {
@@ -117,19 +165,5 @@ public class MemberService {
     public boolean isValidPhone(String phone) {
         Matcher matcher = phonePattern.matcher(phone);
         return matcher.matches();
-    }
-
-    public boolean addInformation(Information information) {
-        Optional<Member> member = memberJpaRepository.findByMemberId(information.getMemberId());
-        if(member.isPresent()) {
-            Profile profile = member.get().getProfile();
-            profile.setIntroduce(information.getIntroduce());
-            profile.setJob(information.getJob());
-            profile.setSpecificDuty(information.getSpecificDuty());
-            profile.setLink(information.getLink());
-            profileJpaRepository.save(profile);
-            return true;
-        }
-        return false;
     }
 }

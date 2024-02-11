@@ -6,18 +6,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+import java.util.Set;
+
 @Entity
+@Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class Technic {
+@NoArgsConstructor
+public class ProfileTechnic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String technicName;
-
-    public Technic(String technicName) {
-        this.technicName = technicName;
-    }
+    Long id;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private Set<Technic> technics;
 }
