@@ -1,17 +1,15 @@
-package Trendithon.SpinOff.domain.board;
+package Trendithon.SpinOff.domain.board.entity;
 
 import Trendithon.SpinOff.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
-
 @Getter
 @Entity
 @AllArgsConstructor
 public class Board {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long board_id;
 
     @ManyToOne
