@@ -15,7 +15,7 @@ public class Board {
 
     @ManyToOne
     @JoinColumn(name = "user_id") // 매핑할 외부 엔티티의 컬럼명 지정
-//  private Member user;
+    private Member user;
 
     private String board_title;
     private String board_comment;
