@@ -10,13 +10,14 @@ import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
 import Trendithon.SpinOff.domain.member.repository.ProfileJpaRepository;
 import Trendithon.SpinOff.domain.member.repository.ProfileTechnicJpaRepository;
 import Trendithon.SpinOff.domain.member.repository.TechnicJpaRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -29,64 +30,58 @@ public class ProfileService {
 
     public boolean addTechnic(String memberId, Set<String> technics) {
         Optional<Member> optionalMember = memberJpaRepository.findByMemberId(memberId);
+            if (optionalMember.isPresent()) {
+                Member member = optionalMember.get();
+                Profile profile = member.getProfile();
+                // 새로운 기술을 추가하거나 이미 있는 기술을 업데이트합니다.
+                saveTechnicForEach(technics, profile);
+                return true;
+            } else {
+                    throw new EntityNotFoundException("Member with memberId " + memberId + " not found");
+            }
+    }
+
+    @Transactional
+    public boolean editTechnics(String memberId, Set<String> newTechnics) {
+        Optional<Member> optionalMember = memberJpaRepository.findByMemberId(memberId);
         if (optionalMember.isPresent()) {
             Member member = optionalMember.get();
             Profile profile = member.getProfile();
-
-            Set<Technic> collects = technics.stream()
-                    .filter(technic -> technicJpaRepository.findByTechnicName(technic).isEmpty())
-                    .map(technic -> technicJpaRepository.save(Technic.builder()
-                            .technicName(technic)
-                            .build()))
-                    .collect(Collectors.toSet());
-
-            profile.getProfileTechnic().setTechnics(collects);
-            profileTechnicJpaRepository.save(profile.getProfileTechnic());
-            profileJpaRepository.save(profile);
-            return true;
+            profileTechnicJpaRepository.deleteAllByProfileId(profile.getId());
+            return saveTechnicForEach(newTechnics, profile);
         } else {
-            log.error("Member NotFound");
-            return false;
+            throw new EntityNotFoundException("Member with memberId " + memberId + " not found");
         }
     }
 
-    public boolean editTechnics(EditInformation editInformation) {
-        Optional<Profile> optionalProfile = profileJpaRepository.findById(editInformation.getProfileId());
-        if (optionalProfile.isEmpty()) {
-            return false;
+    private boolean saveTechnicForEach(Set<String> newTechnics, Profile profile) {
+        for (String technicName : newTechnics) {
+            Technic technic;
+            technic = saveTechnic(technicName);
+            ProfileTechnic profileTechnic = new ProfileTechnic();
+            profileTechnic.setProfile(profile);
+            profileTechnic.setTechnic(technic);
+            profileTechnicJpaRepository.save(profileTechnic);
         }
-
-        Profile profile = optionalProfile.get();
-        ProfileTechnic profileTechnic = profile.getProfileTechnic();
-        if (profileTechnic == null) {
-            return false;
-        }
-
-        Set<Technic> newTechnics = editInformation.getTechnics();
-        log.info("new {}", newTechnics);
-
-        for (Technic newTechnic : newTechnics) {
-            if(technicJpaRepository.findByTechnicName(newTechnic.getTechnicName()).isEmpty()) {
-                technicJpaRepository.save(newTechnic);
-            }
-        }
-
-        Set<Technic> collect = getTechnics(newTechnics);
-        log.info("collect = {}", collect);
-
-        profileTechnic.setTechnics(collect);
-        profileTechnicJpaRepository.save(profileTechnic);
-        profileJpaRepository.save(profile);
         return true;
     }
 
-    private Set<Technic> getTechnics(Set<Technic> newTechnics) {
-        return newTechnics.stream().map(technic -> technicJpaRepository
-                .findByTechnicName(technic.getTechnicName())
-                .orElseGet(() -> Technic.builder()
-                        .technicName(technic.getTechnicName())
-                        .build()
-                )).collect(Collectors.toSet());
+    private Technic saveTechnic(String technicName) {
+        Technic technic;
+        if (technicJpaRepository.existsByTechnicName(technicName)) {
+            technic = getTechnic(technicName);
+        } else {
+            technic = new Technic();
+            technic.setTechnicName(technicName);
+            // 다른 필요한 속성들을 설정합니다.
+            technic = technicJpaRepository.save(technic);
+        }
+        return technic;
+    }
+
+    private Technic getTechnic(String technicName) {
+        Optional<Technic> optionalTechnic = technicJpaRepository.findById(technicName);
+        return optionalTechnic.orElse(null);
     }
 
     public boolean addInformation(Information information) {

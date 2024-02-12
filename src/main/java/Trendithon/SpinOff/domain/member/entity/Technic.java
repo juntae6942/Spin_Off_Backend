@@ -6,16 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+import java.util.Set;
+
 @Entity
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Technic {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String technicName;
+    @OneToMany(mappedBy = "technic")
+    private Set<ProfileTechnic> profileTechnics;
 
     public Technic(String technicName) {
         this.technicName = technicName;

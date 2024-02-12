@@ -15,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -74,8 +73,8 @@ public class MemberController {
 
     @PostMapping("information/edit")
     public ResponseEntity<Boolean> editInformation(@RequestBody EditInformation editInformation) {
-        boolean result = profileService.editInformation(editInformation);
-        boolean resultTechnic = profileService.editTechnics(editInformation);
-        return ResponseEntity.ok(result && resultTechnic);
+        boolean resultInfo = profileService.editInformation(editInformation);
+        boolean resultTechnic = profileService.editTechnics(editInformation.getMemberId(), editInformation.getTechnics());
+        return ResponseEntity.ok(resultInfo && resultTechnic);
     }
 }

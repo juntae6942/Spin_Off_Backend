@@ -41,11 +41,7 @@ public class MemberService {
                 .authority("ROLE_USER")
                 .build());
 
-        Profile profile = Profile.builder()
-                .profileTechnic(ProfileTechnic.builder()
-                        .technics(new HashSet<>())
-                        .build())
-                .build();
+        Profile profile = new Profile();
 
         Member member = Member.builder()
                 .memberId(memberDto.getMemberId())

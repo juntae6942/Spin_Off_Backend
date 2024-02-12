@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProfileTechnicJpaRepository extends JpaRepository<ProfileTechnic, Long> {}
+public interface ProfileTechnicJpaRepository extends JpaRepository<ProfileTechnic, Long> {
+    void deleteAllByProfileId(Long profileId);
+}

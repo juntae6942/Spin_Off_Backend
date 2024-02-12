@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 @Entity
 @Data
 @Builder
@@ -17,6 +15,10 @@ public class ProfileTechnic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @OneToMany(cascade = CascadeType.PERSIST)
-    private Set<Technic> technics;
+    @ManyToOne
+    @JoinColumn(name = "technic_name")
+    private Technic technic;
+    @ManyToOne
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 }

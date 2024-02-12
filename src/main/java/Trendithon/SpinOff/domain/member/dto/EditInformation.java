@@ -17,5 +17,5 @@ public class EditInformation {
     private String job;
     private String specificDuty;
     private String link;
-    private Set<Technic> technics;
+    private Set<String> technics;
 }

@@ -2,12 +2,14 @@ package Trendithon.SpinOff.domain.member.entity;
 
 import Trendithon.SpinOff.domain.member.dto.EditInformation;
 import Trendithon.SpinOff.domain.member.dto.Information;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -22,8 +24,8 @@ public class Profile {
     private String introduce;
     private String job;
     private String specificDuty;
-    @OneToOne(cascade = CascadeType.ALL)
-    private ProfileTechnic profileTechnic;
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ProfileTechnic> profileTechnics = new HashSet<>();
     private String link;
 
     public void add(Information information) {
