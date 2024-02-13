@@ -31,7 +31,7 @@ public class MemberController {
         this.memberService = memberService;
         this.tokenService = tokenService;
     }
-    
+
     @PostMapping("/sign-up")
     public ResponseEntity<Boolean> signUp(@Validated @RequestBody SignUpDto signUpDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
