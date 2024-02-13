@@ -38,12 +38,13 @@ public class BoardController {
     public ResponseEntity<String> update(@RequestBody String boardData) throws JsonProcessingException {
         System.out.println(boardData);
         boardService.saveUpdate(boardData);
-        return new ResponseEntity<>("Ok", HttpStatus.OK);
+        return ResponseEntity.ok("수정 성공");
     }
 
     @DeleteMapping("/delete/{boardId}")
-    public void delete(@PathVariable String boardId){
+    public ResponseEntity<String> delete(@PathVariable String boardId){
         boardService.delete(Long.parseLong(boardId));
+        return ResponseEntity.ok("삭제 성공");
     }
 
     @GetMapping("/{boardId}")
