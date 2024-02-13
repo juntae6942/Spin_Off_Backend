@@ -12,8 +12,8 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
         Info info = new Info()
                 .version("v1.0.0")
-                .title("minseok's API")
-                .description("Prography 과제 프로젝트");
+                .title("TEAM COY's API")
+                .description("Trendithon 프로젝트");
 
         return new OpenAPI()
                 .info(info);
