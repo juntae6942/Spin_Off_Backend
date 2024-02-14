@@ -4,6 +4,7 @@ import Trendithon.SpinOff.domain.member.dto.EditInformation;
 import Trendithon.SpinOff.domain.member.dto.Information;
 import Trendithon.SpinOff.domain.member.dto.ProfileInformation;
 import Trendithon.SpinOff.domain.member.service.ProfileService;
+import Trendithon.SpinOff.domain.member.valid.exception.CheckMemberIdNotNullException;
 import Trendithon.SpinOff.domain.member.valid.exception.IntroduceOutOfBoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -41,9 +42,12 @@ public class ProfileController {
         return ResponseEntity.ok(resultInfo && resultTechnic);
     }
 
-    @GetMapping("/information/check/{memberId}")
-    public ResponseEntity<ProfileInformation> checkInformation(@PathVariable String memberId) {
+    @GetMapping("/information/check")
+    public ResponseEntity<ProfileInformation> checkInformation(@RequestParam String memberId) {
         log.info("memberId = {}", memberId);
+        if (memberId.isEmpty()) {
+            throw new CheckMemberIdNotNullException("비어있는 memberId는 조회 할 수 없습니다.");
+        }
         return ResponseEntity.ok(profileService.checkInformation(memberId));
     }
 }
