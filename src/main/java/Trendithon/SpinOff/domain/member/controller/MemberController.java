@@ -33,7 +33,7 @@ public class MemberController {
     }
     
     @PostMapping("/sign-up")
-    public ResponseEntity<Boolean> signUp(@Validated @RequestBody SignUpDto signUpDto, BindingResult bindingResult) {
+    public ResponseEntity<Boolean> signUp(@Valid @RequestBody SignUpDto signUpDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             log.info("아이디 혹은 비밀번호를 잘못입력했습니다.");
             return ResponseEntity.ok(false);

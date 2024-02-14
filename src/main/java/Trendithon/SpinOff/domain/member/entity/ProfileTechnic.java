@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class ProfileTechnic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "technic_name")
     private Technic technic;

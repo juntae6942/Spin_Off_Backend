@@ -1,6 +1,5 @@
 package Trendithon.SpinOff.domain.member.service;
 
-import Trendithon.SpinOff.domain.member.entity.ProfileTechnic;
 import Trendithon.SpinOff.domain.member.repository.*;
 import Trendithon.SpinOff.global.jwt.entity.Authority;
 import Trendithon.SpinOff.domain.member.entity.Member;
