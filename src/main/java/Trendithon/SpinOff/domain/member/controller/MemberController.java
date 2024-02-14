@@ -3,7 +3,6 @@ package Trendithon.SpinOff.domain.member.controller;
 import Trendithon.SpinOff.domain.member.dto.*;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.service.MemberService;
-import Trendithon.SpinOff.domain.member.service.ProfileService;
 import Trendithon.SpinOff.global.jwt.service.TokenService;
 import Trendithon.SpinOff.global.jwt.dto.TokenDto;
 import jakarta.validation.Valid;
@@ -24,13 +23,12 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class MemberController {
     private final MemberService memberService;
-    private final ProfileService profileService;
+
     private final TokenService tokenService;
 
     @Autowired
-    public MemberController(MemberService memberService, ProfileService profileService, TokenService tokenService) {
+    public MemberController(MemberService memberService, TokenService tokenService) {
         this.memberService = memberService;
-        this.profileService = profileService;
         this.tokenService = tokenService;
     }
     
@@ -62,19 +60,4 @@ public class MemberController {
             return ResponseEntity.ok(false);
         }
     }   // 회원 아이디 중복 검사
-
-    @PostMapping("/information/add")
-    public ResponseEntity<Boolean> addInformation(@RequestBody Information information) {
-        log.info("멤버 아이디 = {}", information.getMemberId());
-        boolean resultInfo = profileService.addInformation(information);
-        boolean resultTechnic = profileService.addTechnic(information.getMemberId(), information.getTechnics());
-        return ResponseEntity.ok(resultInfo && resultTechnic);
-    }
-
-    @PostMapping("information/edit")
-    public ResponseEntity<Boolean> editInformation(@RequestBody EditInformation editInformation) {
-        boolean resultInfo = profileService.editInformation(editInformation);
-        boolean resultTechnic = profileService.editTechnics(editInformation.getMemberId(), editInformation.getTechnics());
-        return ResponseEntity.ok(resultInfo && resultTechnic);
-    }
 }

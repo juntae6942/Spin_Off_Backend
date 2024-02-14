@@ -2,6 +2,7 @@ package Trendithon.SpinOff.domain.member.service;
 
 import Trendithon.SpinOff.domain.member.dto.EditInformation;
 import Trendithon.SpinOff.domain.member.dto.Information;
+import Trendithon.SpinOff.domain.member.dto.ProfileInformation;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.entity.Profile;
 import Trendithon.SpinOff.domain.member.entity.ProfileTechnic;
@@ -16,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -102,5 +104,31 @@ public class ProfileService {
             return profile.edit(editInformation);
         }
         return false;
+    }
+
+    public ProfileInformation checkInformation(String memberId) {
+        Optional<Member> optionalMember = memberJpaRepository.findByMemberId(memberId);
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            Profile profile = member.getProfile();
+            ProfileInformation information = profile.toDto();
+            Optional<Set<ProfileTechnic>> technics = profileTechnicJpaRepository.findAllByProfileId(profile.getId());
+            setTechnics(technics, information);
+            information.setName(member.getName());
+            return information;
+        } else {
+            throw new EntityNotFoundException("memberId with "+memberId+" not found");
+        }
+    }
+
+    private static void setTechnics(Optional<Set<ProfileTechnic>> technics, ProfileInformation information) {
+        if (technics.isPresent()) {
+            Set<String> result = new HashSet<>();
+            Set<ProfileTechnic> profileTechnics = technics.get();
+            for (ProfileTechnic profileTechnic : profileTechnics) {
+                result.add(profileTechnic.getTechnic().getTechnicName());
+            }
+            information.setTechnics(result);
+        }
     }
 }
