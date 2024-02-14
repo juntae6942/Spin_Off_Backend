@@ -11,6 +11,8 @@ import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
 import Trendithon.SpinOff.domain.member.repository.ProfileJpaRepository;
 import Trendithon.SpinOff.domain.member.repository.ProfileTechnicJpaRepository;
 import Trendithon.SpinOff.domain.member.repository.TechnicJpaRepository;
+import Trendithon.SpinOff.domain.member.valid.exception.MemberNotFoundException;
+import Trendithon.SpinOff.domain.member.valid.exception.ProfileNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -39,7 +41,7 @@ public class ProfileService {
                 saveTechnicForEach(technics, profile);
                 return true;
             } else {
-                    throw new EntityNotFoundException("Member with memberId " + memberId + " not found");
+                    throw new MemberNotFoundException("Member with memberId " + memberId + " not found");
             }
     }
 
@@ -52,7 +54,7 @@ public class ProfileService {
             profileTechnicJpaRepository.deleteAllByProfileId(profile.getId());
             return saveTechnicForEach(newTechnics, profile);
         } else {
-            throw new EntityNotFoundException("Member with memberId " + memberId + " not found");
+            throw new MemberNotFoundException("Member with memberId " + memberId + " not found");
         }
     }
 
@@ -93,8 +95,9 @@ public class ProfileService {
             profile.add(information);
             profileJpaRepository.save(profile);
             return true;
+        } else {
+            throw new MemberNotFoundException("Member with memberId " + information.getMemberId() + " not found");
         }
-        return false;
     }
 
     public boolean editInformation(EditInformation editInformation) {
@@ -102,8 +105,9 @@ public class ProfileService {
         if (member.isPresent()) {
             Profile profile = member.get().getProfile();
             return profile.edit(editInformation);
+        } else {
+            throw new MemberNotFoundException("Member with memberId " + editInformation.getMemberId() + " not found");
         }
-        return false;
     }
 
     public ProfileInformation checkInformation(String memberId) {
@@ -117,7 +121,7 @@ public class ProfileService {
             information.setName(member.getName());
             return information;
         } else {
-            throw new EntityNotFoundException("memberId with "+memberId+" not found");
+            throw new MemberNotFoundException("memberId with "+memberId+" not found");
         }
     }
 
@@ -129,6 +133,8 @@ public class ProfileService {
                 result.add(profileTechnic.getTechnic().getTechnicName());
             }
             information.setTechnics(result);
+        } else {
+            throw new ProfileNotFoundException("memberId with "+ information.getName() +" not found");
         }
     }
 }

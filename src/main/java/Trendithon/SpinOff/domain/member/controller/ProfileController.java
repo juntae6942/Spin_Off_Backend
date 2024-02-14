@@ -42,12 +42,9 @@ public class ProfileController {
         return ResponseEntity.ok(resultInfo && resultTechnic);
     }
 
-    @GetMapping("/information/check")
-    public ResponseEntity<ProfileInformation> checkInformation(@RequestParam String memberId) {
+    @GetMapping("/information/check/{memberId}")
+    public ResponseEntity<ProfileInformation> checkInformation(@PathVariable String memberId) {
         log.info("memberId = {}", memberId);
-        if (memberId.isEmpty()) {
-            throw new CheckMemberIdNotNullException("비어있는 memberId는 조회 할 수 없습니다.");
-        }
         return ResponseEntity.ok(profileService.checkInformation(memberId));
     }
 }
