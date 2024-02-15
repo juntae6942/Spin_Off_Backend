@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class TokenService {
-
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final TokenProvider tokenProvider;
 

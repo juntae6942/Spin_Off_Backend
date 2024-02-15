@@ -10,8 +10,9 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Information {
+public class EditInformation {
     private String memberId;
+    private Long profileId;
     @Size(max = 22)
     private String introduce;
     private String job;

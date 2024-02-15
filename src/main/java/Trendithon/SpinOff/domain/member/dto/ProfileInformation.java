@@ -1,21 +1,21 @@
 package Trendithon.SpinOff.domain.member.dto;
 
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
-public class Information {
-    private String memberId;
-    @Size(max = 22)
+@NoArgsConstructor
+public class ProfileInformation {
+    private String name;
     private String introduce;
     private String job;
     private String specificDuty;
-    private String link;
     private Set<String> technics;
+    private String link;
 }

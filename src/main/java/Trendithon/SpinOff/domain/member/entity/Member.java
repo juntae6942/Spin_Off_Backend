@@ -25,6 +25,7 @@ public class Member {
     private Boolean activate;
     @OneToOne(cascade = CascadeType.ALL)
     private Profile profile;
+
     public boolean isActivated() {
         return activate;
     }
