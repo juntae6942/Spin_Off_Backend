@@ -4,7 +4,7 @@ import Trendithon.SpinOff.domain.member.valid.exception.CheckMemberIdNotNullExce
 import Trendithon.SpinOff.domain.member.valid.exception.IntroduceOutOfBoundException;
 import Trendithon.SpinOff.domain.member.valid.exception.MemberNotFoundException;
 import Trendithon.SpinOff.domain.member.valid.exception.ProfileNotFoundException;
-import io.micrometer.core.instrument.search.MeterNotFoundException;
+
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
