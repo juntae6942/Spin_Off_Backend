@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 
-public class Heart {
+public class HeartBoard {
     @Id
     @GeneratedValue
     private Long heart_id;
@@ -24,7 +24,7 @@ public class Heart {
     private Board board;
 
     @Builder
-    public Heart(Long heart_id, Member member, Board board) {
+    public HeartBoard(Long heart_id, Member member, Board board) {
         this.heart_id = heart_id;
         this.member = member;
         this.board = board;

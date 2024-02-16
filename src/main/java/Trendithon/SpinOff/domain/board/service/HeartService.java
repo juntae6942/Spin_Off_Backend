@@ -2,16 +2,16 @@ package Trendithon.SpinOff.domain.board.service;
 
 import Trendithon.SpinOff.domain.board.dto.HeartRequestDTO;
 import Trendithon.SpinOff.domain.board.entity.Board;
-import Trendithon.SpinOff.domain.board.entity.Heart;
+import Trendithon.SpinOff.domain.board.entity.HeartBoard;
 import Trendithon.SpinOff.domain.board.repository.BoardRepository;
 import Trendithon.SpinOff.domain.board.repository.HeartRepository;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
-import Trendithon.SpinOff.domain.member.valid.exception.MemberNotFoundException;
+
+import Trendithon.SpinOff.domain.profile.valid.exception.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +35,7 @@ public class HeartService {
             throw new Exception();
         }
 
-        Heart heart = Heart.builder()
+        HeartBoard heart = HeartBoard.builder()
                 .board(board)
                 .member(member)
                 .build();
@@ -56,7 +56,7 @@ public class HeartService {
         Board board = boardRepository.findById(heartRequestDTO.getBoardId())
                 .orElseThrow(() -> new MemberNotFoundException("Could not found board id : " + heartRequestDTO.getBoardId()));
 
-        Heart heart = heartRepository.findByMemberAndBoard(member, board)
+        HeartBoard heart = heartRepository.findByMemberAndBoard(member, board)
                 .orElseThrow(() -> new MemberNotFoundException("Could not found heart id"));
 
         heartRepository.delete(heart);
