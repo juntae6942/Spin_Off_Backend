@@ -21,7 +21,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping(value = "/write", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/write")
     public ResponseEntity<String> save(@RequestBody String boardDto) throws JsonProcessingException {
 
         boardService.save(boardDto);
@@ -36,7 +36,7 @@ public class BoardController {
 
     @PostMapping("/update")
     public ResponseEntity<String> update(@RequestBody String boardData) throws JsonProcessingException {
-        System.out.println(boardData);
+        //System.out.println(boardData);
         boardService.saveUpdate(boardData);
         return ResponseEntity.ok("수정 성공");
     }
