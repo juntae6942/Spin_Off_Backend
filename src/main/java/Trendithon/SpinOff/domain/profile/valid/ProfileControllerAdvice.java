@@ -1,9 +1,9 @@
-package Trendithon.SpinOff.domain.member.valid;
+package Trendithon.SpinOff.domain.profile.valid;
 
-import Trendithon.SpinOff.domain.member.valid.exception.CheckMemberIdNotNullException;
-import Trendithon.SpinOff.domain.member.valid.exception.IntroduceOutOfBoundException;
-import Trendithon.SpinOff.domain.member.valid.exception.MemberNotFoundException;
-import Trendithon.SpinOff.domain.member.valid.exception.ProfileNotFoundException;
+import Trendithon.SpinOff.domain.profile.valid.exception.CheckMemberIdNotNullException;
+import Trendithon.SpinOff.domain.profile.valid.exception.IntroduceOutOfBoundException;
+import Trendithon.SpinOff.domain.profile.valid.exception.MemberNotFoundException;
+import Trendithon.SpinOff.domain.profile.valid.exception.ProfileNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -15,13 +15,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ProfileControllerAdvice {
     @ExceptionHandler(IntroduceOutOfBoundException.class)
-    public ResponseEntity<String> introduceOutOfBoundsExceptionHandle(IntroduceOutOfBoundException introduceOutOfBoundException) {
+    public ResponseEntity<String> introduceOutOfBoundsExceptionHandle(
+            IntroduceOutOfBoundException introduceOutOfBoundException) {
         log.error("error message = {}", introduceOutOfBoundException.getMessage());
         return ResponseEntity.badRequest().body(introduceOutOfBoundException.getMessage());
     }
 
     @ExceptionHandler(CheckMemberIdNotNullException.class)
-    public ResponseEntity<String> checkMemberIdNotNullExceptionHandle(CheckMemberIdNotNullException checkMemberIdNotNullException) {
+    public ResponseEntity<String> checkMemberIdNotNullExceptionHandle(
+            CheckMemberIdNotNullException checkMemberIdNotNullException) {
         log.error("error message = {}", checkMemberIdNotNullException.getMessage());
         return ResponseEntity.badRequest().body(checkMemberIdNotNullException.getMessage());
     }

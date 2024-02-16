@@ -1,4 +1,4 @@
-package Trendithon.SpinOff.domain.member.entity;
+package Trendithon.SpinOff.domain.profile.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

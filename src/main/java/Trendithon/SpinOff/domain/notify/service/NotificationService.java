@@ -1,11 +1,11 @@
 package Trendithon.SpinOff.domain.notify.service;
 
 import Trendithon.SpinOff.domain.member.entity.Member;
-import Trendithon.SpinOff.domain.member.entity.Profile;
+import Trendithon.SpinOff.domain.profile.entity.Profile;
 import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
-import Trendithon.SpinOff.domain.member.repository.ProfileJpaRepository;
-import Trendithon.SpinOff.domain.member.valid.exception.MemberNotFoundException;
-import Trendithon.SpinOff.domain.member.valid.exception.ProfileNotFoundException;
+import Trendithon.SpinOff.domain.profile.repository.ProfileJpaRepository;
+import Trendithon.SpinOff.domain.profile.valid.exception.MemberNotFoundException;
+import Trendithon.SpinOff.domain.profile.valid.exception.ProfileNotFoundException;
 import Trendithon.SpinOff.domain.notify.repository.EmitterRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class NotificationService {
             Member member = optionalMember.get();
             Long id = member.getId();
             SseEmitter emitter = createEmitter(id);
-            sendToClient(id, "EventStream Created. [memberId= "+id+"]","sse 접속 성공","sse");
+            sendToClient(id, "EventStream Created. [memberId= " + id + "]", "sse 접속 성공", "sse");
             return emitter;
         } else {
             throw new MemberNotFoundException("Member with memberId " + memberId + " not found");
@@ -42,16 +42,18 @@ public class NotificationService {
     }
 
     public Member validUser(String memberId) {
-        return memberJpaRepository.findByMemberId(memberId).orElseThrow(() -> new MemberNotFoundException("Member with memberId " + memberId + " not found"));
+        return memberJpaRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new MemberNotFoundException("Member with memberId " + memberId + " not found"));
     }
 
     public Profile validProfile(Long profileId) {
-        return profileJpaRepository.findById(profileId).orElseThrow(() -> new ProfileNotFoundException("Profile with profileId "+ profileId +" not found"));
+        return profileJpaRepository.findById(profileId)
+                .orElseThrow(() -> new ProfileNotFoundException("Profile with profileId " + profileId + " not found"));
     }
 
     private <T> void sendToClient(Long memberId, T data, String comment, String type) {
         SseEmitter emitter = emitterRepository.get(memberId);
-        if(emitter != null) {
+        if (emitter != null) {
             try {
                 emitter.send(SseEmitter.event()
                         .id(String.valueOf(memberId))

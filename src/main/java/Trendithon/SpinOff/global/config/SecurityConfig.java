@@ -25,14 +25,15 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
-    public SecurityConfig(TokenProvider tokenProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtAccessDeniedHandler jwtAccessDeniedHandler) {
+    public SecurityConfig(TokenProvider tokenProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+                          JwtAccessDeniedHandler jwtAccessDeniedHandler) {
         this.tokenProvider = tokenProvider;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -51,11 +52,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(
                                 PathRequest.toH2Console()
-                                ,new AntPathRequestMatcher("/api/login")
-                                ,new AntPathRequestMatcher("/api/sign-up")
-                                ,new AntPathRequestMatcher("/checkDuplicateMemberId")
-                                ,new AntPathRequestMatcher("/findMemberId")
-                                ,new AntPathRequestMatcher("/**")
+                                , new AntPathRequestMatcher("/api/login")
+                                , new AntPathRequestMatcher("/api/sign-up")
+                                , new AntPathRequestMatcher("/checkDuplicateMemberId")
+                                , new AntPathRequestMatcher("/findMemberId")
+                                , new AntPathRequestMatcher("/**")
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
