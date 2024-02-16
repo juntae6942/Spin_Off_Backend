@@ -30,7 +30,6 @@ public class Profile {
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProfileTechnic> profileTechnics = new HashSet<>();
     private String link;
-    private Integer likeCount = 0;
 
     public void add(Information information) {
         this.introduce = information.getIntroduce();
