@@ -59,7 +59,6 @@ public class Profile {
                 .introduce(introduce)
                 .job(job)
                 .specificDuty(specificDuty)
-                .likeCount(likeCount)
                 .link(link)
                 .build();
     }
