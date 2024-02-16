@@ -1,10 +1,10 @@
-package Trendithon.SpinOff.domain.board.service;
+package Trendithon.SpinOff.domain.boardlike.service;
 
-import Trendithon.SpinOff.domain.board.dto.HeartRequestDTO;
+import Trendithon.SpinOff.domain.boardlike.dto.HeartRequestDto;
 import Trendithon.SpinOff.domain.board.entity.Board;
-import Trendithon.SpinOff.domain.board.entity.HeartBoard;
+import Trendithon.SpinOff.domain.boardlike.entity.HeartBoard;
 import Trendithon.SpinOff.domain.board.repository.BoardRepository;
-import Trendithon.SpinOff.domain.board.repository.HeartRepository;
+import Trendithon.SpinOff.domain.boardlike.repository.HeartRepository;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
 
@@ -23,7 +23,7 @@ public class HeartService {
     private final BoardRepository boardRepository;
 
     @Transactional
-    public void insert(HeartRequestDTO heartRequestDTO, Long boardId) throws Exception {
+    public void insert(HeartRequestDto heartRequestDTO, Long boardId) throws Exception {
         Member member = memberRepository.findById(heartRequestDTO.getMemberId())
                 .orElseThrow(() -> new MemberNotFoundException("Could not found member id : " + heartRequestDTO.getMemberId()));
 
@@ -48,7 +48,7 @@ public class HeartService {
     }
 
     @Transactional
-    public void delete(HeartRequestDTO heartRequestDTO, Long boardId) {
+    public void delete(HeartRequestDto heartRequestDTO, Long boardId) {
 
         Member member = memberRepository.findById(heartRequestDTO.getMemberId())
                 .orElseThrow(() -> new MemberNotFoundException("Could not found member id : " + heartRequestDTO.getMemberId()));

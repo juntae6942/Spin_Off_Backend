@@ -1,4 +1,4 @@
-package Trendithon.SpinOff.domain.board.dto;
+package Trendithon.SpinOff.domain.boardlike.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Getter
 @Setter
-public class HeartRequestDTO {
+public class HeartRequestDto {
     private Long memberId;
     private Long boardId;
 }

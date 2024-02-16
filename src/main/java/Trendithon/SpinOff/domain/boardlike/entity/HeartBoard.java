@@ -1,5 +1,6 @@
-package Trendithon.SpinOff.domain.board.entity;
+package Trendithon.SpinOff.domain.boardlike.entity;
 
+import Trendithon.SpinOff.domain.board.entity.Board;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Builder;

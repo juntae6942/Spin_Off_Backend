@@ -1,7 +1,7 @@
-package Trendithon.SpinOff.domain.board.controller;
+package Trendithon.SpinOff.domain.boardlike.controller;
 
-import Trendithon.SpinOff.domain.board.dto.HeartRequestDTO;
-import Trendithon.SpinOff.domain.board.service.HeartService;
+import Trendithon.SpinOff.domain.boardlike.dto.HeartRequestDto;
+import Trendithon.SpinOff.domain.boardlike.service.HeartService;
 import Trendithon.SpinOff.global.entity.ResponseResult;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class HeartController {
     private final HeartService heartService;
 
     @PutMapping("/{boardId}/like")
-    public ResponseEntity<ResponseResult<?>> insert(@RequestBody @Valid HeartRequestDTO heartRequestDTO, @PathVariable Long boardId){
+    public ResponseEntity<ResponseResult<?>> insert(@RequestBody @Valid HeartRequestDto heartRequestDTO, @PathVariable Long boardId){
         try {
             heartService.insert(heartRequestDTO, boardId);
             return ResponseEntity.ok(ResponseResult.success("좋아요 추가 성공", null));
@@ -28,7 +28,7 @@ public class HeartController {
     }
 
     @DeleteMapping("/{boardId}/dellike")
-    public ResponseEntity<ResponseResult<?>> delete(@RequestBody @Valid HeartRequestDTO heartRequestDTO, @PathVariable Long boardId){
+    public ResponseEntity<ResponseResult<?>> delete(@RequestBody @Valid HeartRequestDto heartRequestDTO, @PathVariable Long boardId){
         try{
             heartService.delete(heartRequestDTO, boardId);
             return ResponseEntity.ok(ResponseResult.success("좋아요 삭제 성공", null));

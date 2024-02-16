@@ -1,7 +1,7 @@
-package Trendithon.SpinOff.domain.board.repository;
+package Trendithon.SpinOff.domain.boardlike.repository;
 
 import Trendithon.SpinOff.domain.board.entity.Board;
-import Trendithon.SpinOff.domain.board.entity.HeartBoard;
+import Trendithon.SpinOff.domain.boardlike.entity.HeartBoard;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
