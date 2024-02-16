@@ -1,5 +1,6 @@
 package Trendithon.SpinOff.domain.member.entity;
 
+import Trendithon.SpinOff.domain.profile.entity.Profile;
 import Trendithon.SpinOff.global.jwt.entity.Authority;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

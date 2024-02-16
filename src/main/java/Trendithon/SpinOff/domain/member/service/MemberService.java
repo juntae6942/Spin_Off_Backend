@@ -3,7 +3,7 @@ package Trendithon.SpinOff.domain.member.service;
 import Trendithon.SpinOff.domain.member.repository.*;
 import Trendithon.SpinOff.global.jwt.entity.Authority;
 import Trendithon.SpinOff.domain.member.entity.Member;
-import Trendithon.SpinOff.domain.member.entity.Profile;
+import Trendithon.SpinOff.domain.profile.entity.Profile;
 import Trendithon.SpinOff.domain.member.dto.SignUpDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,13 +32,13 @@ public class MemberService {
 
     @Transactional
     public ResponseEntity<Boolean> signUp(SignUpDto memberDto) {
-        if(memberJpaRepository.findByMemberId(memberDto.getMemberId()).orElse(null)!=null) {
+        if (memberJpaRepository.findByMemberId(memberDto.getMemberId()).orElse(null) != null) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다.");
         }
         Authority authority = authorityJpaRepository.findByAuthority("ROLE_USER")
                 .orElseGet(() -> Authority.builder()
-                .authority("ROLE_USER")
-                .build());
+                        .authority("ROLE_USER")
+                        .build());
 
         Profile profile = new Profile();
 
@@ -54,7 +54,7 @@ public class MemberService {
 
         log.info(member.getEmail());
         Member save = memberJpaRepository.save(member);
-        log.info("멤버 저장 됨 {}",save.getId());
+        log.info("멤버 저장 됨 {}", save.getId());
         log.info(save.getPassword());
         return ResponseEntity.ok(true);
     }

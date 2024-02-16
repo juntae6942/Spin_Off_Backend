@@ -1,4 +1,4 @@
-package Trendithon.SpinOff.domain.member.entity;
+package Trendithon.SpinOff.domain.profile.entity;
 
 import Trendithon.SpinOff.domain.member.dto.EditInformation;
 import Trendithon.SpinOff.domain.member.dto.Information;

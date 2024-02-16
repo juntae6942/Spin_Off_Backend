@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -34,7 +33,7 @@ public class MemberController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<Boolean> signUp(@Valid @RequestBody SignUpDto signUpDto, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             log.info("아이디 혹은 비밀번호를 잘못입력했습니다.");
             return ResponseEntity.ok(false);
         }
@@ -48,13 +47,13 @@ public class MemberController {
 
 
     @PostMapping("/memberId/check")
-    public ResponseEntity<Boolean> checkDuplicate(@RequestBody HashMap<String,String> member) {
+    public ResponseEntity<Boolean> checkDuplicate(@RequestBody HashMap<String, String> member) {
         String memberId = member.get("memberId");
         log.info(memberId);
 
         Optional<Member> byMember = memberService.findByMemberId(memberId);
 
-        if(byMember.isEmpty()){
+        if (byMember.isEmpty()) {
             return ResponseEntity.ok(true);
         } else {
             return ResponseEntity.ok(false);

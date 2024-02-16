@@ -1,19 +1,18 @@
-package Trendithon.SpinOff.domain.member.service;
+package Trendithon.SpinOff.domain.profile.service;
 
 import Trendithon.SpinOff.domain.member.dto.EditInformation;
 import Trendithon.SpinOff.domain.member.dto.Information;
 import Trendithon.SpinOff.domain.member.dto.ProfileInformation;
 import Trendithon.SpinOff.domain.member.entity.Member;
-import Trendithon.SpinOff.domain.member.entity.Profile;
-import Trendithon.SpinOff.domain.member.entity.ProfileTechnic;
-import Trendithon.SpinOff.domain.member.entity.Technic;
+import Trendithon.SpinOff.domain.profile.entity.Profile;
+import Trendithon.SpinOff.domain.profile.entity.ProfileTechnic;
+import Trendithon.SpinOff.domain.profile.entity.Technic;
 import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
-import Trendithon.SpinOff.domain.member.repository.ProfileJpaRepository;
-import Trendithon.SpinOff.domain.member.repository.ProfileTechnicJpaRepository;
-import Trendithon.SpinOff.domain.member.repository.TechnicJpaRepository;
-import Trendithon.SpinOff.domain.member.valid.exception.MemberNotFoundException;
-import Trendithon.SpinOff.domain.member.valid.exception.ProfileNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
+import Trendithon.SpinOff.domain.profile.repository.ProfileJpaRepository;
+import Trendithon.SpinOff.domain.profile.repository.ProfileTechnicJpaRepository;
+import Trendithon.SpinOff.domain.profile.repository.TechnicJpaRepository;
+import Trendithon.SpinOff.domain.profile.valid.exception.MemberNotFoundException;
+import Trendithon.SpinOff.domain.profile.valid.exception.ProfileNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,15 +33,15 @@ public class ProfileService {
 
     public boolean addTechnic(String memberId, Set<String> technics) {
         Optional<Member> optionalMember = memberJpaRepository.findByMemberId(memberId);
-            if (optionalMember.isPresent()) {
-                Member member = optionalMember.get();
-                Profile profile = member.getProfile();
-                // 새로운 기술을 추가하거나 이미 있는 기술을 업데이트합니다.
-                saveTechnicForEach(technics, profile);
-                return true;
-            } else {
-                    throw new MemberNotFoundException("Member with memberId " + memberId + " not found");
-            }
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            Profile profile = member.getProfile();
+            // 새로운 기술을 추가하거나 이미 있는 기술을 업데이트합니다.
+            saveTechnicForEach(technics, profile);
+            return true;
+        } else {
+            throw new MemberNotFoundException("Member with memberId " + memberId + " not found");
+        }
     }
 
     @Transactional
@@ -90,7 +89,7 @@ public class ProfileService {
 
     public boolean addInformation(Information information) {
         Optional<Member> member = memberJpaRepository.findByMemberId(information.getMemberId());
-        if(member.isPresent()) {
+        if (member.isPresent()) {
             Profile profile = member.get().getProfile();
             profile.add(information);
             profileJpaRepository.save(profile);
@@ -121,7 +120,7 @@ public class ProfileService {
             information.setName(member.getName());
             return information;
         } else {
-            throw new MemberNotFoundException("memberId with "+memberId+" not found");
+            throw new MemberNotFoundException("memberId with " + memberId + " not found");
         }
     }
 
@@ -134,7 +133,7 @@ public class ProfileService {
             }
             information.setTechnics(result);
         } else {
-            throw new ProfileNotFoundException("memberId with "+ information.getName() +" not found");
+            throw new ProfileNotFoundException("memberId with " + information.getName() + " not found");
         }
     }
 }

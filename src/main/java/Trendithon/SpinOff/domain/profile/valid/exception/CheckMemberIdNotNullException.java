@@ -1,4 +1,4 @@
-package Trendithon.SpinOff.domain.member.valid.exception;
+package Trendithon.SpinOff.domain.profile.valid.exception;
 
 import java.util.NoSuchElementException;
 
