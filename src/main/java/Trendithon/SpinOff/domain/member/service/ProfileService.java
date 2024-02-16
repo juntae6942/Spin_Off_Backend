@@ -13,7 +13,6 @@ import Trendithon.SpinOff.domain.member.repository.ProfileTechnicJpaRepository;
 import Trendithon.SpinOff.domain.member.repository.TechnicJpaRepository;
 import Trendithon.SpinOff.domain.member.valid.exception.MemberNotFoundException;
 import Trendithon.SpinOff.domain.member.valid.exception.ProfileNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

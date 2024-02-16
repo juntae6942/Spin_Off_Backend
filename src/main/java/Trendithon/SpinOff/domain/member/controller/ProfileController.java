@@ -4,7 +4,6 @@ import Trendithon.SpinOff.domain.member.dto.EditInformation;
 import Trendithon.SpinOff.domain.member.dto.Information;
 import Trendithon.SpinOff.domain.member.dto.ProfileInformation;
 import Trendithon.SpinOff.domain.member.service.ProfileService;
-import Trendithon.SpinOff.domain.member.valid.exception.CheckMemberIdNotNullException;
 import Trendithon.SpinOff.domain.member.valid.exception.IntroduceOutOfBoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
