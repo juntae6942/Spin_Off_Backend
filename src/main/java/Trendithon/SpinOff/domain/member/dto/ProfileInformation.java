@@ -18,4 +18,5 @@ public class ProfileInformation {
     private String specificDuty;
     private Set<String> technics;
     private String link;
+    private Integer likeCount;
 }

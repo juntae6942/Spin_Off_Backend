@@ -5,11 +5,9 @@ import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
 import Trendithon.SpinOff.domain.board.service.BoardService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,5 +50,4 @@ public class BoardController {
         BoardResponseDto boardResponseDTO = boardService.findByBoardId(Long.parseLong(boardId));
         return new ResponseEntity<>(boardResponseDTO, HttpStatus.OK);
     }
-
 }
