@@ -30,6 +30,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final AuthorityJpaRepository authorityJpaRepository;
 
+
     @Transactional
     public ResponseEntity<Boolean> signUp(SignUpDto memberDto) {
         if (memberJpaRepository.findByMemberId(memberDto.getMemberId()).orElse(null) != null) {
@@ -63,6 +64,9 @@ public class MemberService {
         return memberJpaRepository.findByMemberId(memberId);
     }
 
+    public Member findByEmail(String email) {
+        return memberJpaRepository.findByEmail(email).orElse(null);
+    }
     public boolean isValidEmail(String email) {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();

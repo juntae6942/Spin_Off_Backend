@@ -19,7 +19,7 @@ public class BoardResponseDto {
     private String boardContext;
     private Integer boardLike;
     private List<String> imageUrl;
-    //private Long memberId;
+    private String writer;
 
     public static BoardResponseDto toDTO(Board board) throws JsonProcessingException {
         BoardResponseDto boardResponseDto = new BoardResponseDto();
@@ -28,7 +28,7 @@ public class BoardResponseDto {
         boardResponseDto.setBoardContext(board.getBoard_context());
         boardResponseDto.setBoardLike(board.getBoard_like());
         boardResponseDto.setImageUrl(toList(board.getImage_url()));
-        //boardResponseDTO.setMemberId(board.getMember().getId());
+        boardResponseDto.setWriter(board.getWriter());
         return boardResponseDto;
     }
 
