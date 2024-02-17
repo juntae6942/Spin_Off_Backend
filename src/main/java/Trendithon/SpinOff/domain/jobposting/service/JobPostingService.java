@@ -37,6 +37,7 @@ public class JobPostingService {
                 .applicantsCount(applicantsCount)
                 .jobTitle(jobTitle)
                 .type(type)
+                .likeCount(0)
                 .deadLine(deadLine)
                 .level(level)
                 .build();

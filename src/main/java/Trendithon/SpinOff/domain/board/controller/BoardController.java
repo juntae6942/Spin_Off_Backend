@@ -6,7 +6,6 @@ import Trendithon.SpinOff.domain.board.service.BoardService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,8 @@ public class BoardController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<BoardResponseDto>> search(@RequestParam(required = false) String title)throws JsonProcessingException {
+    public ResponseEntity<List<BoardResponseDto>> search(@RequestParam(required = false) String title)
+            throws JsonProcessingException {
         List<BoardResponseDto> boardResponseDtoList = boardService.search(title);
         return new ResponseEntity<>(boardResponseDtoList, HttpStatus.OK);
     }
@@ -40,7 +40,7 @@ public class BoardController {
     }
 
     @DeleteMapping("/delete/{boardId}")
-    public ResponseEntity<String> delete(@PathVariable String boardId){
+    public ResponseEntity<String> delete(@PathVariable String boardId) {
         boardService.delete(Long.parseLong(boardId));
         return ResponseEntity.ok("삭제 성공");
     }

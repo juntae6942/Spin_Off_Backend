@@ -1,8 +1,13 @@
 package Trendithon.SpinOff.domain.member.entity;
 
+import Trendithon.SpinOff.domain.board.entity.Board;
+import Trendithon.SpinOff.domain.heart.entity.HeartJobPosting;
+import Trendithon.SpinOff.domain.jobposting.entity.JobPosting;
 import Trendithon.SpinOff.domain.profile.entity.Profile;
 import Trendithon.SpinOff.global.jwt.entity.Authority;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +31,8 @@ public class Member {
     private Boolean activate;
     @OneToOne(cascade = CascadeType.ALL)
     private Profile profile;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<Board> boards = new ArrayList<>();
 
     public boolean isActivated() {
         return activate;
