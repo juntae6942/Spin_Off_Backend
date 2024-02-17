@@ -2,9 +2,6 @@ package Trendithon.SpinOff.domain.notify.service;
 
 import Trendithon.SpinOff.domain.board.entity.Board;
 import Trendithon.SpinOff.domain.board.repository.BoardRepository;
-import Trendithon.SpinOff.domain.heart.service.HeartService;
-import Trendithon.SpinOff.domain.jobposting.entity.JobPosting;
-import Trendithon.SpinOff.domain.jobposting.repository.JobPostingJpaRepository;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.profile.entity.Profile;
 import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
