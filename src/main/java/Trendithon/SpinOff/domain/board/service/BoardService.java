@@ -4,10 +4,14 @@ import Trendithon.SpinOff.domain.board.dto.BoardDto;
 import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
 import Trendithon.SpinOff.domain.board.entity.Board;
 import Trendithon.SpinOff.domain.board.repository.BoardRepository;
+import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
+import Trendithon.SpinOff.domain.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,22 +23,22 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class BoardService {
+    private final MemberService memberService;
     private final BoardRepository boardRepository;
-    private final MemberJpaRepository memberJpaRepository;
 
     @Transactional
-    public void save(String boardDTO) throws JsonProcessingException {
-
-        System.out.println(boardDTO);
-        ObjectMapper objectMapper = new ObjectMapper();
-        BoardDto boardDTO1 = objectMapper.readValue(boardDTO, BoardDto.class);
+    public void save(BoardDto boardDTO) throws JsonProcessingException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserEmail = authentication.getName(); // 현재 사용자의 이메일 가져오기
+        Member currentMember = memberService.findByEmail(currentUserEmail);
         Board board = new Board();
-        board.setBoard_title(boardDTO1.getBoardTitle());
-        board.setBoard_context(boardDTO1.getBoardContext());
-        board.setBoard_like(boardDTO1.getBoardLike());
+        board.setBoard_title(boardDTO.getBoardTitle());
+        board.setBoard_context(boardDTO.getBoardContext());
+        board.setBoard_like(boardDTO.getBoardLike());
+        board.setWriter(currentMember.getMemberId());
 
         ObjectMapper objectMapper1 = new ObjectMapper();
-        String jsonString = objectMapper1.writeValueAsString(boardDTO1.getImageUrl());
+        String jsonString = objectMapper1.writeValueAsString(boardDTO.getImageUrl());
         board.setImage_url(jsonString);
 
         boardRepository.save(board);

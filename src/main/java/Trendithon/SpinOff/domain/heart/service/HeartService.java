@@ -79,13 +79,6 @@ public class HeartService {
     }
 
 
-    public Member getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return null; // 인증안되었을 때
-        }
-        return (Member) authentication.getPrincipal();
-    }
 
     @Transactional
     public void insert(Long memberId, Long jobPostingId) throws Exception {
