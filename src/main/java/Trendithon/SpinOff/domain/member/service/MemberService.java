@@ -65,8 +65,9 @@ public class MemberService {
     }
 
     public Member findByEmail(String email) {
-        return memberJpaRepository.findByEmail(email).orElse(null);
+        return memberJpaRepository.findByMemberId(email).orElse(null);
     }
+
     public boolean isValidEmail(String email) {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
