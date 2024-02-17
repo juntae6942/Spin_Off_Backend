@@ -1,4 +1,4 @@
-package Trendithon.SpinOff.domain.boardlike.dto;
+package Trendithon.SpinOff.domain.heart.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
