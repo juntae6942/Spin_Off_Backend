@@ -31,7 +31,7 @@ public class LoginService implements UserDetailsService {
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
         return memberJpaRepository.findOneWithAuthorityByMemberId(memberId)
                 .map(member -> createMember(memberId, member))
-                .orElseThrow(()->new UsernameNotFoundException(memberId + " -> 데이터베이스에서 찾을 수 없습니다."));
+                .orElseThrow(() -> new UsernameNotFoundException(memberId + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
 
     private User createMember(String memberName, Member member) {
@@ -40,7 +40,7 @@ public class LoginService implements UserDetailsService {
         }
         List<GrantedAuthority> grantedAuthorities =
                 Collections.singletonList(new SimpleGrantedAuthority(member.getAuthority().getAuthority()));
-        return new User(member.getEmail(), member.getPassword(), grantedAuthorities);
+        return new User(member.getMemberId(), member.getPassword(), grantedAuthorities);
     }
 
     @Transactional
