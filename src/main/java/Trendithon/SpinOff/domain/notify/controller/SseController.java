@@ -1,7 +1,6 @@
 package Trendithon.SpinOff.domain.notify.controller;
 
-import Trendithon.SpinOff.domain.heart.service.HeartService;
-import Trendithon.SpinOff.domain.notify.domain.dto.LikeMessage;
+import Trendithon.SpinOff.domain.notify.domain.dto.LikerInfo;
 import Trendithon.SpinOff.domain.notify.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +21,7 @@ public class SseController {
     }
 
     @PostMapping(value = "/project/liked", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public ResponseEntity<Void> likeProjectAlarm(@RequestBody LikeMessage likeMessage) {
+    public ResponseEntity<Void> likeProjectAlarm(@RequestBody LikerInfo likeMessage) {
         String liker = likeMessage.liker();
         Long projectId = likeMessage.projectId();
         notificationService.doLike(liker, projectId);
