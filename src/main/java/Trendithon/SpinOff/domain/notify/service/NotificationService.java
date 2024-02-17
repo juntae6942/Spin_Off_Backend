@@ -1,5 +1,10 @@
 package Trendithon.SpinOff.domain.notify.service;
 
+import Trendithon.SpinOff.domain.board.entity.Board;
+import Trendithon.SpinOff.domain.board.repository.BoardRepository;
+import Trendithon.SpinOff.domain.heart.service.HeartService;
+import Trendithon.SpinOff.domain.jobposting.entity.JobPosting;
+import Trendithon.SpinOff.domain.jobposting.repository.JobPostingJpaRepository;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.profile.entity.Profile;
 import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
@@ -23,6 +28,7 @@ public class NotificationService {
     private final MemberJpaRepository memberJpaRepository;
     private final EmitterRepository emitterRepository;
     private final ProfileJpaRepository profileJpaRepository;
+    private final BoardRepository boardRepository;
 
     public SseEmitter subscribe(String memberId) {
         Optional<Member> optionalMember = memberJpaRepository.findByMemberId(memberId);
@@ -79,10 +85,12 @@ public class NotificationService {
     }
 
     @Transactional
-    public void doLike(String likerId) {
-        Member member = validUser(likerId);
-        Profile profile = validProfile(member.getProfile().getId());
-
-        notify(member.getId(), "like", "프로필에 좋아요가 달렸습니다", "like");
+    public void doLike(String liker, Long projectId) {
+        Member member = validUser(liker);
+        Optional<Board> optionalBoard = boardRepository.findById(projectId);
+        if (optionalBoard.isPresent()) {
+            Board board = optionalBoard.get();
+            notify(); // member 와 board의 매핑 이후 작업 필요
+        }
     }
 }

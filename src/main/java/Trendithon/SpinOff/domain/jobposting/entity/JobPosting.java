@@ -32,10 +32,17 @@ public class JobPosting {
     private EmploymentType type;
     private LocalDateTime deadLine;
     private ExperienceLevel level;
-    @OneToMany
-    private List<Member> liker;
+    private Integer likeCount;
 
     public void increaseViewCount() {
         viewCount++;
+    }
+
+    public void increaseLikeCount() {
+        likeCount++;
+    }
+
+    public void decreaseLikeCount() {
+        --likeCount;
     }
 }

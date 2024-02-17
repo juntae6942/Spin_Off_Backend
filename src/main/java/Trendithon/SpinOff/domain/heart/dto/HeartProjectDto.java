@@ -1,17 +1,13 @@
 package Trendithon.SpinOff.domain.heart.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.springframework.stereotype.Service;
 
-@Service
+@Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-public class HeartRequestDto {
+public class HeartProjectDto {
     private Long memberId;
     private Long boardId;
 }
