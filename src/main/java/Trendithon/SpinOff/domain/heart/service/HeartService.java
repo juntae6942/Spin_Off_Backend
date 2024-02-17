@@ -1,10 +1,10 @@
-package Trendithon.SpinOff.domain.boardlike.service;
+package Trendithon.SpinOff.domain.heart.service;
 
-import Trendithon.SpinOff.domain.boardlike.dto.HeartRequestDto;
+import Trendithon.SpinOff.domain.heart.dto.HeartRequestDto;
 import Trendithon.SpinOff.domain.board.entity.Board;
-import Trendithon.SpinOff.domain.boardlike.entity.HeartBoard;
+import Trendithon.SpinOff.domain.heart.entity.Heart;
 import Trendithon.SpinOff.domain.board.repository.BoardRepository;
-import Trendithon.SpinOff.domain.boardlike.repository.HeartRepository;
+import Trendithon.SpinOff.domain.heart.repository.HeartRepository;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
 
@@ -25,17 +25,19 @@ public class HeartService {
     @Transactional
     public void insert(HeartRequestDto heartRequestDTO, Long boardId) throws Exception {
         Member member = memberRepository.findById(heartRequestDTO.getMemberId())
-                .orElseThrow(() -> new MemberNotFoundException("Could not found member id : " + heartRequestDTO.getMemberId()));
+                .orElseThrow(() -> new MemberNotFoundException(
+                        "Could not found member id : " + heartRequestDTO.getMemberId()));
 
         Board board = boardRepository.findById(heartRequestDTO.getBoardId())
-                .orElseThrow(() -> new MemberNotFoundException("Could not found board id : " + heartRequestDTO.getBoardId()));
+                .orElseThrow(() -> new MemberNotFoundException(
+                        "Could not found board id : " + heartRequestDTO.getBoardId()));
         // 이미 좋아요 되어 있음
         if (heartRepository.findByMemberAndBoard(member, board).isPresent()) {
             //에러
             throw new Exception();
         }
 
-        HeartBoard heart = HeartBoard.builder()
+        Heart heart = Heart.builder()
                 .board(board)
                 .member(member)
                 .build();
@@ -51,12 +53,14 @@ public class HeartService {
     public void delete(HeartRequestDto heartRequestDTO, Long boardId) {
 
         Member member = memberRepository.findById(heartRequestDTO.getMemberId())
-                .orElseThrow(() -> new MemberNotFoundException("Could not found member id : " + heartRequestDTO.getMemberId()));
+                .orElseThrow(() -> new MemberNotFoundException(
+                        "Could not found member id : " + heartRequestDTO.getMemberId()));
 
         Board board = boardRepository.findById(heartRequestDTO.getBoardId())
-                .orElseThrow(() -> new MemberNotFoundException("Could not found board id : " + heartRequestDTO.getBoardId()));
+                .orElseThrow(() -> new MemberNotFoundException(
+                        "Could not found board id : " + heartRequestDTO.getBoardId()));
 
-        HeartBoard heart = heartRepository.findByMemberAndBoard(member, board)
+        Heart heart = heartRepository.findByMemberAndBoard(member, board)
                 .orElseThrow(() -> new MemberNotFoundException("Could not found heart id"));
 
         heartRepository.delete(heart);
