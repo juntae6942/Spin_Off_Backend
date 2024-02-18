@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,8 +45,10 @@ public class ProfileController {
         return ResponseEntity.ok(resultInfo && resultTechnic);
     }
 
-    @GetMapping("/information/check/{memberId}")
-    public ResponseEntity<ProfileInformation> checkInformation(@PathVariable String memberId) {
+    @GetMapping("/information/check")
+    public ResponseEntity<ProfileInformation> checkInformation() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String memberId = authentication.getName();
         log.info("memberId = {}", memberId);
         return ResponseEntity.ok(profileService.checkInformation(memberId));
     }
