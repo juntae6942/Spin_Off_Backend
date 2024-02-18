@@ -2,7 +2,6 @@ package Trendithon.SpinOff.domain.heart.controller;
 
 import Trendithon.SpinOff.domain.heart.dto.HeartJobPostingDto;
 import Trendithon.SpinOff.domain.heart.dto.HeartProjectDto;
-import Trendithon.SpinOff.domain.heart.entity.HeartJobPosting;
 import Trendithon.SpinOff.domain.heart.service.HeartService;
 import Trendithon.SpinOff.global.entity.ResponseResult;
 import jakarta.validation.Valid;
@@ -14,38 +13,36 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class HeartController {
 
     private final HeartService heartService;
 
-    @PutMapping("/board/like/{boardId}")
-    public ResponseEntity<ResponseResult<?>> insert(@RequestBody @Valid HeartProjectDto heartRequestDTO,
-                                                    @PathVariable Long boardId) {
+    @PutMapping("/board/like")
+    public ResponseEntity<ResponseResult<?>> insert(@RequestBody @Valid HeartProjectDto heartProjectDto) {
         try {
-            heartService.insert(heartRequestDTO, boardId);
+            heartService.insertProject(heartProjectDto.getMemberId(), heartProjectDto.getBoardId());
             return ResponseEntity.ok(ResponseResult.success("좋아요 추가 성공", null));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ResponseResult.failure("이미 좋아요 누름"));
         }
     }
 
-    @DeleteMapping("/board/unlike/{boardId}")
-    public ResponseEntity<ResponseResult<?>> delete(@RequestBody @Valid HeartProjectDto heartProjectDto,
-                                                    @PathVariable Long boardId) {
+    @DeleteMapping("/board/unlike")
+    public ResponseEntity<ResponseResult<?>> delete(@RequestBody @Valid HeartProjectDto heartProjectDto) {
         try {
-            heartService.delete(heartProjectDto, boardId);
+            heartService.deleteProject(heartProjectDto.getMemberId(), heartProjectDto.getBoardId());
             return ResponseEntity.ok(ResponseResult.success("좋아요 삭제 성공", null));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ResponseResult.failure("좋아요 안 눌렀넹?"));
         }
     }
 
-    @PutMapping("/jobPosting/like/{jobPostingId}")
-    public ResponseEntity<ResponseResult<?>> insert(@RequestBody @Valid HeartJobPostingDto heartJobPostingDto,
-                                                    @PathVariable Long jobPostingId) {
+    @PutMapping("/job/like")
+    public ResponseEntity<ResponseResult<?>> insert(@RequestBody @Valid HeartJobPostingDto heartJobPostingDto) {
         try {
-            heartService.insert(heartJobPostingDto.memberId(), jobPostingId);
+            heartService.insertJobPosting(heartJobPostingDto.memberId(), heartJobPostingDto.jobPostingId());
             return ResponseEntity.ok(ResponseResult.success("좋아요 추가 성공", null));
         } catch (Exception e) {
             log.info("error message = {}", e.getMessage());
@@ -53,11 +50,10 @@ public class HeartController {
         }
     }
 
-    @DeleteMapping("/jobPosting/unlike/{jobPostingId}")
-    public ResponseEntity<ResponseResult<?>> delete(@RequestBody @Valid HeartJobPostingDto heartJobPostingDto,
-                                                    @PathVariable Long jobPostingId) {
+    @DeleteMapping("/job/unlike")
+    public ResponseEntity<ResponseResult<?>> delete(@RequestBody @Valid HeartJobPostingDto heartJobPostingDto) {
         try {
-            heartService.delete(heartJobPostingDto.memberId(), jobPostingId);
+            heartService.deleteJobPosting(heartJobPostingDto.memberId(), heartJobPostingDto.jobPostingId());
             return ResponseEntity.ok(ResponseResult.success("좋아요 삭제 성공", null));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ResponseResult.failure("해당 공고에 좋아요를 누르지 않았습니다."));

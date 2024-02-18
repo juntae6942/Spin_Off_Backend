@@ -26,8 +26,6 @@ public class Member {
     private Boolean activate;
     @OneToOne(cascade = CascadeType.ALL)
     private Profile profile;
-//    @OneToMany(cascade = CascadeType.ALL)
-//    private List<Board> boards = new ArrayList<>();
 
     public boolean isActivated() {
         return activate;
