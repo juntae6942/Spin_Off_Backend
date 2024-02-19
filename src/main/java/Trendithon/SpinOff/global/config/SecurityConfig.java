@@ -56,7 +56,7 @@ public class SecurityConfig {
                                         , new AntPathRequestMatcher("/api/sign-up")
                                         , new AntPathRequestMatcher("/checkDuplicateMemberId")
                                         , new AntPathRequestMatcher("/findMemberId")
-//                                , new AntPathRequestMatcher("/**")
+                                , new AntPathRequestMatcher("/**")
                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )

@@ -29,17 +29,19 @@ public class BoardController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserEmail = authentication.getName(); // 현재 사용자의 이메일 가져오기
         Member currentMember = memberService.findByEmail(currentUserEmail);
+        System.out.println("currentUserEmail"+currentUserEmail);
+
 
         // 현재 사용자를 찾을 수 없는 경우 Forbidden 반환
-        if (currentMember == null) {
+        if (currentUserEmail   == null) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("사용자를 찾을 수 없습니다.");
         }
 
         // 작성자 이름 설정
-        Long writerId = currentMember.getId();
-        System.out.println(currentMember+"현재 맴버");
-        System.out.println(currentMember.getMemberId()+"멤버아이디");
-        boardDto.setWriter_id(writerId);
+        //Long writerId = currentMember.getId();
+        //System.out.println(currentMember+"현재 맴버");
+        //System.out.println(currentMember.getMemberId()+"멤버아이디");
+        //boardDto.setWriter_id(writerId);
         // BoardDto를 서비스로 전달
         boardService.save(boardDto);
 
