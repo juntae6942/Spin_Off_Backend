@@ -35,7 +35,6 @@ public class BoardService {
     public void save(BoardDto boardDTO) throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserEmail = authentication.getName(); // 현재 사용자의 이메일 가져오기
-        //Member currentMember = memberService.findByEmail(currentUserEmail);
         Board board = new Board();
         System.out.println(board);
         board.setBoard_title(boardDTO.getBoardTitle());
