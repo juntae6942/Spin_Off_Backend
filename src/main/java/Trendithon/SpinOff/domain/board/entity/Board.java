@@ -10,10 +10,12 @@ import lombok.Setter;
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long board_id;// id
-    private String board_title;// 제목
-    private String board_context;// 내용
-    private Long boardLike;// 좋아요
-    private String image_url;// 이미지 URL
+    private Long bno;// id
+    @Column(length = 50,nullable = false)
+    private String title;// 제목
+    @Column(length = 500,nullable = false)
+    private String content;// 내용
+    private Integer boardLike;// 좋아요
+    private String imageUrl;// 이미지 URL
     private String writer;
 }
