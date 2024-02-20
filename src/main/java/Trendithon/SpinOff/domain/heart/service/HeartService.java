@@ -53,7 +53,7 @@ public class HeartService {
         heartProjectRepository.save(heart);
 
         // 좋아요 누를 시 게시물의 좋아요 증가
-        board.setBoard_like(board.getBoard_like() + 1);
+        board.setBoardLike(board.getBoardLike() + 1);
         boardRepository.save(board);
     }
 
@@ -73,7 +73,7 @@ public class HeartService {
 
         heartProjectRepository.delete(heart);
 
-        board.setBoard_like(board.getBoard_like() - 1);
+        board.setBoardLike(board.getBoardLike() - 1);
         boardRepository.save(board);
 
     }

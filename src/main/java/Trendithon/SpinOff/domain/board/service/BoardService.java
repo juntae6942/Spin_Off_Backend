@@ -3,6 +3,7 @@ package Trendithon.SpinOff.domain.board.service;
 import Trendithon.SpinOff.domain.board.dto.BoardDto;
 import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
 import Trendithon.SpinOff.domain.board.entity.Board;
+import Trendithon.SpinOff.domain.board.repository.BoardPopularPostRepository;
 import Trendithon.SpinOff.domain.board.repository.BoardRepository;
 import Trendithon.SpinOff.domain.board.repository.BoardSearchRepository;
 import Trendithon.SpinOff.domain.member.entity.Member;
@@ -30,6 +31,7 @@ public class BoardService {
     private final MemberService memberService;
     private final BoardRepository boardRepository;
     private final BoardSearchRepository boardSearchRepository;
+    private final BoardPopularPostRepository boardPopularPostRepository;
 
     @Transactional
     public void save(BoardDto boardDTO) throws JsonProcessingException {
@@ -40,7 +42,7 @@ public class BoardService {
         System.out.println(board);
         board.setBoard_title(boardDTO.getBoardTitle());
         board.setBoard_context(boardDTO.getBoardContext());
-        board.setBoard_like(boardDTO.getBoardLike());
+        board.setBoardLike(boardDTO.getBoardLike());
         board.setWriter(currentUserEmail);
 
         ObjectMapper objectMapper1 = new ObjectMapper();
@@ -53,6 +55,9 @@ public class BoardService {
         //findAll : 테스트보드라는 클래스가 담긴 List를 반환하는것을 확인할수있다
         return boardRepository.findAll(pageable);
     }
+    public Page<Board> boardPopularList(Pageable pageable){
+        return boardPopularPostRepository.findByBoardPopularPost(pageable);
+    }
     public Page<Board> boardSearchList(String searchKeyword, Pageable pageable){
         return boardSearchRepository.findByBoardTitleContaining(searchKeyword, pageable);
     }
@@ -64,7 +69,7 @@ public class BoardService {
         board.setBoard_id(boardDTO1.getBoardId());
         board.setBoard_title(boardDTO1.getBoardTitle());
         board.setBoard_context(boardDTO1.getBoardContext());
-        board.setBoard_like(boardDTO1.getBoardLike());
+        board.setBoardLike(boardDTO1.getBoardLike());
 
         ObjectMapper objectMapper1 = new ObjectMapper();
         String jsonString = objectMapper1.writeValueAsString(boardDTO1.getImageUrl());
