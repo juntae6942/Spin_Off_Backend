@@ -3,11 +3,14 @@ package Trendithon.SpinOff.domain.board.controller;
 
 import Trendithon.SpinOff.domain.board.dto.BoardDto;
 import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
+import Trendithon.SpinOff.domain.board.entity.Board;
+import Trendithon.SpinOff.domain.board.repository.BoardPopularPostRepository;
 import Trendithon.SpinOff.domain.board.service.BoardService;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/project")
@@ -44,6 +48,24 @@ public class BoardController {
 
         return ResponseEntity.ok("저장 성공");
     }
+    @GetMapping("/popular/list")
+    public ResponseEntity<List<BoardResponseDto>> boardpopularList(
+            @PageableDefault(page = 0, size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<BoardResponseDto> popularBoardResponsePage = boardService.boardPopularList(pageable).map(board ->{
+            try {
+                return BoardResponseDto.toDTO(board);
+            } catch (JsonProcessingException e) {
+                // 예외 처리
+                return null; // 예외가 발생하면 null을 반환하거나 다른 처리를 수행할 수 있습니다.
+            }
+        });
+
+        List<BoardResponseDto> popularBoardResponseList = popularBoardResponsePage.getContent();
+        return ResponseEntity.ok().body(popularBoardResponseList);
+    }
+
+
     @GetMapping("/board/list")
     public ResponseEntity<Page<BoardResponseDto>> boardList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                                             @RequestParam(required = false) String searchKeyword) {
