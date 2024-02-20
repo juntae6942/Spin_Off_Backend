@@ -4,6 +4,7 @@ import Trendithon.SpinOff.domain.heart.dto.HeartJobPostingDto;
 import Trendithon.SpinOff.domain.heart.dto.HeartProjectDto;
 import Trendithon.SpinOff.domain.heart.service.HeartService;
 import Trendithon.SpinOff.global.entity.ResponseResult;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ public class HeartController {
     private final HeartService heartService;
 
     @PutMapping("/board/like")
+    @Operation(summary = "좋아요 추가")
     public ResponseEntity<ResponseResult<?>> insert(@RequestBody @Valid HeartProjectDto heartProjectDto) {
         try {
             heartService.insertProject(heartProjectDto.getMemberId(), heartProjectDto.getBoardId());
@@ -30,6 +32,7 @@ public class HeartController {
     }
 
     @DeleteMapping("/board/unlike")
+    @Operation(summary = "좋아요 취소")
     public ResponseEntity<ResponseResult<?>> delete(@RequestBody @Valid HeartProjectDto heartProjectDto) {
         try {
             heartService.deleteProject(heartProjectDto.getMemberId(), heartProjectDto.getBoardId());
