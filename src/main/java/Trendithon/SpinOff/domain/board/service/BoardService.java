@@ -35,16 +35,18 @@ public class BoardService {
     public void save(BoardDto boardDTO) throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserEmail = authentication.getName(); // 현재 사용자의 이메일 가져오기
+
+
         Board board = new Board();
         System.out.println(board);
-        board.setBoard_title(boardDTO.getBoardTitle());
-        board.setBoard_context(boardDTO.getBoardContext());
+        board.setTitle(boardDTO.getTitle());
+        board.setContent(boardDTO.getContent());
         board.setBoardLike(boardDTO.getBoardLike());
         board.setWriter(currentUserEmail);
 
-        ObjectMapper objectMapper1 = new ObjectMapper();
-        String jsonString = objectMapper1.writeValueAsString(boardDTO.getImageUrl());
-        board.setImage_url(jsonString);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String imageUrlString  = objectMapper.writeValueAsString(boardDTO.getImageUrl());
+        board.setImageUrl(imageUrlString );
 
         boardRepository.save(board);
     }
@@ -63,14 +65,14 @@ public class BoardService {
         ObjectMapper objectMapper = new ObjectMapper();
         BoardDto boardDTO1 = objectMapper.readValue(boardDTO, BoardDto.class);
         Board board = new Board();
-        board.setBoard_id(boardDTO1.getBoardId());
-        board.setBoard_title(boardDTO1.getBoardTitle());
-        board.setBoard_context(boardDTO1.getBoardContext());
+        board.setBno(boardDTO1.getBoardId());
+        board.setTitle(boardDTO1.getTitle());
+        board.setContent(boardDTO1.getContent());
         board.setBoardLike(boardDTO1.getBoardLike());
 
         ObjectMapper objectMapper1 = new ObjectMapper();
         String jsonString = objectMapper1.writeValueAsString(boardDTO1.getImageUrl());
-        board.setImage_url(jsonString);
+        board.setImageUrl(jsonString);
 
         boardRepository.save(board);
 

@@ -17,17 +17,17 @@ public class BoardResponseDto {
     private Long boardId;
     private String boardTitle;
     private String boardContext;
-    private Long boardLike;
+    private Integer boardLike;
     private List<String> imageUrl;
     private String writer;
 
     public static BoardResponseDto toDTO(Board board) throws JsonProcessingException {
         BoardResponseDto boardResponseDto = new BoardResponseDto();
-        boardResponseDto.setBoardId(board.getBoard_id());
-        boardResponseDto.setBoardTitle(board.getBoard_title());
-        boardResponseDto.setBoardContext(board.getBoard_context());
+        boardResponseDto.setBoardId(board.getBno());
+        boardResponseDto.setBoardTitle(board.getTitle());
+        boardResponseDto.setBoardContext(board.getContent());
         boardResponseDto.setBoardLike(board.getBoardLike());
-        boardResponseDto.setImageUrl(toList(board.getImage_url()));
+        boardResponseDto.setImageUrl(toList(board.getImageUrl()));
         boardResponseDto.setWriter(board.getWriter());
         return boardResponseDto;
     }
