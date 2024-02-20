@@ -31,14 +31,14 @@ public class HeartService {
     private final JobPostingJpaRepository jobPostingJpaRepository;
 
     @Transactional
-    public void insert(HeartProjectDto heartRequestDTO, Long boardId) throws Exception {
-        Member member = memberRepository.findById(heartRequestDTO.getMemberId())
+    public void insertProject(Long memberId, Long boardId) throws Exception {
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(
-                        "Could not found member id : " + heartRequestDTO.getMemberId()));
+                        "Could not found member id : " + memberId));
 
-        Board board = boardRepository.findById(heartRequestDTO.getBoardId())
+        Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new MemberNotFoundException(
-                        "Could not found board id : " + heartRequestDTO.getBoardId()));
+                        "Could not found board id : " + boardId));
         // 이미 좋아요 되어 있음
         if (heartProjectRepository.findByMemberAndBoard(member, board).isPresent()) {
             //에러
@@ -58,15 +58,15 @@ public class HeartService {
     }
 
     @Transactional
-    public void delete(HeartProjectDto heartRequestDTO, Long boardId) {
+    public void deleteProject(Long memberId, Long boardId) {
 
-        Member member = memberRepository.findById(heartRequestDTO.getMemberId())
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(
-                        "Could not found member id : " + heartRequestDTO.getMemberId()));
+                        "Could not found member id : " + memberId));
 
-        Board board = boardRepository.findById(heartRequestDTO.getBoardId())
+        Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new MemberNotFoundException(
-                        "Could not found board id : " + heartRequestDTO.getBoardId()));
+                        "Could not found board id : " + boardId));
 
         HeartProject heart = heartProjectRepository.findByMemberAndBoard(member, board)
                 .orElseThrow(() -> new MemberNotFoundException("Could not found heart id"));
@@ -79,9 +79,8 @@ public class HeartService {
     }
 
 
-
     @Transactional
-    public void insert(Long memberId, Long jobPostingId) throws Exception {
+    public void insertJobPosting(Long memberId, Long jobPostingId) throws Exception {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(
                         "Could not found member id : " + memberId));
@@ -108,7 +107,7 @@ public class HeartService {
     }
 
     @Transactional
-    public void delete(Long memberId, Long jobPostingId) {
+    public void deleteJobPosting(Long memberId, Long jobPostingId) {
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(

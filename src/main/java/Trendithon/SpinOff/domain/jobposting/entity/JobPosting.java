@@ -2,14 +2,15 @@ package Trendithon.SpinOff.domain.jobposting.entity;
 
 import Trendithon.SpinOff.domain.jobposting.entity.type.EmploymentType;
 import Trendithon.SpinOff.domain.jobposting.entity.type.ExperienceLevel;
-import Trendithon.SpinOff.domain.member.entity.Member;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+
 import java.time.LocalDateTime;
-import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class JobPosting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

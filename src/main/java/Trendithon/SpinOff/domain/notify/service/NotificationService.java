@@ -3,6 +3,7 @@ package Trendithon.SpinOff.domain.notify.service;
 import Trendithon.SpinOff.domain.board.entity.Board;
 import Trendithon.SpinOff.domain.board.repository.BoardRepository;
 import Trendithon.SpinOff.domain.member.entity.Member;
+import Trendithon.SpinOff.domain.notify.domain.dto.LikeMessage;
 import Trendithon.SpinOff.domain.profile.entity.Profile;
 import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
 import Trendithon.SpinOff.domain.profile.repository.ProfileJpaRepository;
@@ -83,11 +84,13 @@ public class NotificationService {
 
     @Transactional
     public void doLike(String liker, Long projectId) {
-        Member member = validUser(liker);
         Optional<Board> optionalBoard = boardRepository.findById(projectId);
         if (optionalBoard.isPresent()) {
             Board board = optionalBoard.get();
-            notify(); // member 와 board의 매핑 이후 작업 필요
+            Member member = validUser(board.getWriter());
+            String comment = liker + "가 " + board.getBoard_title() + "을 좋아합니다.";
+            LikeMessage likeMessage = new LikeMessage(member.getMemberId(), comment, board.getBoard_title());
+            notify(member.getId(), likeMessage, comment, "like");
         }
     }
 }

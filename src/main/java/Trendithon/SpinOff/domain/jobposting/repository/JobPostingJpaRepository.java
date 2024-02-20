@@ -12,4 +12,6 @@ public interface JobPostingJpaRepository extends JpaRepository<JobPosting, Long>
     List<JobPosting> findByDeadLineAfterAndJobTitleContainingOrCompanyNameContaining(LocalDateTime deadLine,
                                                                                      String jobTitle,
                                                                                      String name);
+
+    List<JobPosting> findByDeadLineAfter(LocalDateTime localDateTime);
 }
