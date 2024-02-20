@@ -49,10 +49,10 @@ public class BoardController {
         return ResponseEntity.ok("저장 성공");
     }
     @GetMapping("/popular/list")
-    public ResponseEntity<Page<BoardResponseDto>> boardpopularList(
-            @PageableDefault(page = 0, size = 7, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity<List<BoardResponseDto>> boardpopularList(
+            @PageableDefault(page = 0, size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        Page<BoardResponseDto> popularBoardResponseList = boardService.boardPopularList(pageable).map(board ->{
+        Page<BoardResponseDto> popularBoardResponsePage = boardService.boardPopularList(pageable).map(board ->{
             try {
                 return BoardResponseDto.toDTO(board);
             } catch (JsonProcessingException e) {
@@ -61,6 +61,7 @@ public class BoardController {
             }
         });
 
+        List<BoardResponseDto> popularBoardResponseList = popularBoardResponsePage.getContent();
         return ResponseEntity.ok().body(popularBoardResponseList);
     }
 

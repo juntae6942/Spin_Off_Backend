@@ -6,8 +6,6 @@ import Trendithon.SpinOff.domain.board.entity.Board;
 import Trendithon.SpinOff.domain.board.repository.BoardPopularPostRepository;
 import Trendithon.SpinOff.domain.board.repository.BoardRepository;
 import Trendithon.SpinOff.domain.board.repository.BoardSearchRepository;
-import Trendithon.SpinOff.domain.member.entity.Member;
-import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
 import Trendithon.SpinOff.domain.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

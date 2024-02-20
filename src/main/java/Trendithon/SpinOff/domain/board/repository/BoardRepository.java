@@ -12,4 +12,3 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findWithParams(@Param("title") String title);
 
 }
-
