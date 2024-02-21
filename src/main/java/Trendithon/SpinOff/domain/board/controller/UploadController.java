@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/upload")
@@ -27,12 +29,13 @@ public class UploadController {
     @PostMapping
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
-            String fileName=file.getOriginalFilename();
-            String fileUrl= "https://" + bucket + "/test" +fileName;
-            ObjectMetadata metadata= new ObjectMetadata();
+            String originalFileName = file.getOriginalFilename();
+            String encodedFileName = URLEncoder.encode(originalFileName, StandardCharsets.UTF_8);
+            String fileUrl = "https://trendithonfile.s3.ap-northeast-2.amazonaws.com/" + encodedFileName;
+            ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
-            amazonS3Client.putObject(bucket,fileName,file.getInputStream(),metadata);
+            amazonS3Client.putObject(bucket, originalFileName, file.getInputStream(), metadata);
             return ResponseEntity.ok(fileUrl);
         } catch (IOException e) {
             e.printStackTrace();
