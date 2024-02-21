@@ -31,6 +31,7 @@ public class BoardService {
     private final BoardSearchRepository boardSearchRepository;
     private final BoardPopularPostRepository boardPopularPostRepository;
 
+
     @Transactional
     public void save(BoardDto boardDTO) throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -40,13 +41,21 @@ public class BoardService {
         Board board = new Board();
         System.out.println(board);
         board.setTitle(boardDTO.getTitle());
+        board.setDescription(boardDTO.getDescription());
+        board.setProjBackground(boardDTO.getProjBackground());
+        board.setCategory(boardDTO.getCategory());
+        board.setGithubUrl(boardDTO.getGithubUrl());
+        board.setMainFeature(boardDTO.getMainFeature());
+        board.setProjUrl(boardDTO.getProjUrl());
+        board.setTeamMembers(boardDTO.getTeamMembers());
         board.setContent(boardDTO.getContent());
         board.setBoardLike(boardDTO.getBoardLike());
         board.setWriter(currentUserEmail);
+        board.setImageUrl(boardDTO.getImageUrl());
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String imageUrlString  = objectMapper.writeValueAsString(boardDTO.getImageUrl());
-        board.setImageUrl(imageUrlString );
+        String jsonString = objectMapper.writeValueAsString(boardDTO.getMemberPart());
+        board.setMemberPart(jsonString);
 
         boardRepository.save(board);
     }
@@ -65,7 +74,7 @@ public class BoardService {
         ObjectMapper objectMapper = new ObjectMapper();
         BoardDto boardDTO1 = objectMapper.readValue(boardDTO, BoardDto.class);
         Board board = new Board();
-        board.setBno(boardDTO1.getBoardId());
+        board.setBno(boardDTO1.getBno());
         board.setTitle(boardDTO1.getTitle());
         board.setContent(boardDTO1.getContent());
         board.setBoardLike(boardDTO1.getBoardLike());

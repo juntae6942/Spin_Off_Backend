@@ -34,3 +34,17 @@ logging:
     me.junTae: DEBUG
   file:
     path: /etc/log/logfile.log
+
+#S3 설정
+cloud:
+  aws:
+    s3:
+      bucket: trendithonfile
+    credentials:
+      access-key: AKIAZBAE57CCNJHI72ZY
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
