@@ -6,7 +6,6 @@ import Trendithon.SpinOff.domain.board.entity.Board;
 import Trendithon.SpinOff.domain.board.repository.BoardPopularPostRepository;
 import Trendithon.SpinOff.domain.board.repository.BoardRepository;
 import Trendithon.SpinOff.domain.board.repository.BoardSearchRepository;
-import Trendithon.SpinOff.domain.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BoardService {
 
-    private final MemberService memberService;
     private final BoardRepository boardRepository;
     private final BoardSearchRepository boardSearchRepository;
     private final BoardPopularPostRepository boardPopularPostRepository;
@@ -40,22 +38,23 @@ public class BoardService {
 
         Board board = new Board();
         System.out.println(board);
-        board.setTitle(boardDTO.getTitle());
-        board.setDescription(boardDTO.getDescription());
-        board.setProjBackground(boardDTO.getProjBackground());
+        board.setProjectName(boardDTO.getProjectName());
+        board.setProjectDescription(boardDTO.getProjectDescription());
+        board.setProjectBackground(boardDTO.getProjectBackground());
         board.setCategory(boardDTO.getCategory());
-        board.setGithubUrl(boardDTO.getGithubUrl());
-        board.setMainFeature(boardDTO.getMainFeature());
-        board.setProjUrl(boardDTO.getProjUrl());
-        board.setTeamMembers(boardDTO.getTeamMembers());
-        board.setContent(boardDTO.getContent());
+        board.setGithub(boardDTO.getGithub());
+        board.setProjectFeatures(boardDTO.getProjectFeatures());
+        board.setDistribution(boardDTO.getDistribution());
+        String projectMembers = String.join(",", boardDTO.getProjectMembers());
+        board.setProjectMembers(projectMembers);
+        //board.setContent(boardDTO.getContent());
         board.setBoardLike(boardDTO.getBoardLike());
         board.setWriter(currentUserEmail);
-        board.setImageUrl(boardDTO.getImageUrl());
+        board.setProjectImage(boardDTO.getProjectImage());
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = objectMapper.writeValueAsString(boardDTO.getMemberPart());
-        board.setMemberPart(jsonString);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String jsonString = objectMapper.writeValueAsString(boardDTO.getMemberPart());
+//        board.setMemberPart(jsonString);
 
         boardRepository.save(board);
     }
@@ -75,13 +74,13 @@ public class BoardService {
         BoardDto boardDTO1 = objectMapper.readValue(boardDTO, BoardDto.class);
         Board board = new Board();
         board.setBno(boardDTO1.getBno());
-        board.setTitle(boardDTO1.getTitle());
-        board.setContent(boardDTO1.getContent());
+        board.setProjectName(boardDTO1.getProjectName());
+        //board.setContent(boardDTO1.getContent());
         board.setBoardLike(boardDTO1.getBoardLike());
 
         ObjectMapper objectMapper1 = new ObjectMapper();
-        String jsonString = objectMapper1.writeValueAsString(boardDTO1.getImageUrl());
-        board.setImageUrl(jsonString);
+        String jsonString = objectMapper1.writeValueAsString(boardDTO1.getProjectImage());
+        board.setProjectImage(jsonString);
 
         boardRepository.save(board);
 

@@ -16,18 +16,18 @@ public class BoardDto {
 //    private List<String> imageUrl; // 이미지 URL
 //    private Long writer_id; // 작성자
     private Long bno;// id
-    private String title;// 제목
-    private String description;// 한줄 소개
-    private String projBackground;//배경
-    private String mainFeature;//주요기능
-    private String imageUrl;// 이미지 URL
-    private List<String> memberPart;//팀원
-    private String projUrl;//배포 URL
-    private String githubUrl;//깃허브 링크
-    private String teamMembers;//팀원
+    private String projectName;// 제목
+    private String projectDescription;// 한줄 소개
+    private String projectBackground;//배경
+    private String projectFeatures;//주요기능
+    private String projectImage;// 이미지 URL
+    //private List<String> memberPart;//팀원
+    private String distribution;//배포 URL
+    private String github;//깃허브 링크
+    private List<String> projectMembers;//팀원
     private String category;//프로젝트 카테고리
-    private String content;// 내용
+    //private String content;// 내용
     private Integer boardLike;// 좋아요
-    private Long writer_id; // 작성자
+    private Long writer; // 작성자
 
 }
