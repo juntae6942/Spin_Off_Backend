@@ -20,7 +20,7 @@ public class HeartProject {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
+    @JoinColumn(name = "bno")
     private Board board;
 
     @Builder

@@ -38,12 +38,9 @@ public class BoardResponseDto {
         boardResponseDto.setMainFeature(board.getProjectFeatures());
         boardResponseDto.setImageUrl(board.getProjectImage());// 이미지 URL
         boardResponseDto.setProjUrl(board.getDistribution());
-        boardResponseDto.setGithubUrl(board.getGithub());
-        //boardResponseDto.setMemberPart(toList(board.getMemberPart()));
+        boardResponseDto.setGithubUrl(board.getGithub());;
         boardResponseDto.setTeamMember(board.getProjectMembers());
         boardResponseDto.setCategory(board.getCategory());
-//        boardResponseDto.setContent(board.getContent());
-        boardResponseDto.setBoardLike(board.getBoardLike());
         boardResponseDto.setWriter(board.getWriter());
         return boardResponseDto;
     }
