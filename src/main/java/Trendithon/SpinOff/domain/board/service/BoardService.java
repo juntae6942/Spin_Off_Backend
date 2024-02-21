@@ -47,7 +47,6 @@ public class BoardService {
         board.setDistribution(boardDTO.getDistribution());
         String projectMembers = String.join(",", boardDTO.getProjectMembers());
         board.setProjectMembers(projectMembers);
-        //board.setContent(boardDTO.getContent());
         board.setBoardLike(boardDTO.getBoardLike());
         board.setWriter(currentUserEmail);
         board.setProjectImage(boardDTO.getProjectImage());

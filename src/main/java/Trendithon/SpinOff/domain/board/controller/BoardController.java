@@ -6,9 +6,11 @@ import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
 import Trendithon.SpinOff.domain.board.service.BoardService;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.service.MemberService;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,6 +30,10 @@ public class BoardController {
 
     private final BoardService boardService;
     private final MemberService memberService;
+    private final AmazonS3Client amazonS3Client;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
     @PostMapping(value = "/write")
     @Operation(summary = "글 생성")
     public ResponseEntity<String> save(@RequestBody BoardDto boardDto) throws JsonProcessingException {
@@ -50,7 +56,7 @@ public class BoardController {
     @GetMapping("/popular/list")
     @Operation(summary = "좋아요 기준 인기 게시물")
     public ResponseEntity<List<BoardResponseDto>> boardpopularList(
-            @PageableDefault(page = 0, size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(page = 0, size = 7, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 
         Page<BoardResponseDto> popularBoardResponsePage = boardService.boardPopularList(pageable).map(board ->{
             try {
