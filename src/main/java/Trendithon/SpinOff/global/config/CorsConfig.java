@@ -16,6 +16,11 @@ public class CorsConfig {
         corsConfiguration.addAllowedHeader("*"); // 헤더
         corsConfiguration.setAllowCredentials(true);
 
+        corsConfiguration.addAllowedOrigin("http://localhost:3001"); // 도메인
+        corsConfiguration.addAllowedMethod("*"); // 메서드
+        corsConfiguration.addAllowedHeader("*"); // 헤더
+        corsConfiguration.setAllowCredentials(true);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
 

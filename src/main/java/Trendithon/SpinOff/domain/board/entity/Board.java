@@ -1,6 +1,7 @@
 package Trendithon.SpinOff.domain.board.entity;
 
 import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,9 +14,23 @@ public class Board {
     private Long bno;// id
     @Column(length = 50,nullable = false)
     private String title;// 제목
+    @Column(length =20,nullable= false)
+    private String description;// 한줄 소개
+    @Column(length= 1000,nullable = false)
+    private String projBackground;//배경
+    @Column(length=100,nullable = false)
+    private String mainFeature;//주요기능
+    
+    private String imageUrl;// 이미지 URL
+    
+    private String projUrl;//배포 URL
+    
+    private String githubUrl;//깃허브 링크
+    private String memberPart;//팀원
+    private String teamMembers;//팀원
+    private String category;//프로젝트 카테고리
     @Column(length = 500,nullable = false)
     private String content;// 내용
     private Integer boardLike;// 좋아요
-    private String imageUrl;// 이미지 URL
     private String writer;
 }
