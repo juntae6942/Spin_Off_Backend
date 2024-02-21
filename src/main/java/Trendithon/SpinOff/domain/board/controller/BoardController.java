@@ -3,16 +3,12 @@ package Trendithon.SpinOff.domain.board.controller;
 
 import Trendithon.SpinOff.domain.board.dto.BoardDto;
 import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
-import Trendithon.SpinOff.domain.board.entity.Board;
-import Trendithon.SpinOff.domain.board.repository.BoardPopularPostRepository;
 import Trendithon.SpinOff.domain.board.service.BoardService;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -45,6 +41,7 @@ public class BoardController {
         if (currentUserEmail   == null) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("사용자를 찾을 수 없습니다.");
         }
+
 
         boardService.save(boardDto);
 
