@@ -106,7 +106,7 @@ public class BoardController {
         return new ResponseEntity<>(boardResponseDtoList, HttpStatus.OK);
     }
 
-    @PostMapping("/update/{boardId}")
+    @PutMapping("/update/{boardId}")
     @Operation(summary = "게시물 수정")
     public ResponseEntity<String> update(@RequestBody String boardData, @PathVariable Long boardId) throws JsonProcessingException {
         try {

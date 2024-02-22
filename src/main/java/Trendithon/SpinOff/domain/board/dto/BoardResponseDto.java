@@ -42,6 +42,7 @@ public class BoardResponseDto {
         boardResponseDto.setTeamMember(board.getProjectMembers());
         boardResponseDto.setCategory(board.getCategory());
         boardResponseDto.setWriter(board.getWriter());
+        boardResponseDto.setBoardLike(board.getBoardLike());
         return boardResponseDto;
     }
 
