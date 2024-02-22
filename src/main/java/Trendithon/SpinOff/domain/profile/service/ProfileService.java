@@ -1,5 +1,7 @@
 package Trendithon.SpinOff.domain.profile.service;
 
+import Trendithon.SpinOff.domain.board.entity.Board;
+import Trendithon.SpinOff.domain.board.repository.BoardRepository;
 import Trendithon.SpinOff.domain.member.dto.EditInformation;
 import Trendithon.SpinOff.domain.member.dto.Information;
 import Trendithon.SpinOff.domain.member.dto.ProfileInformation;
@@ -14,6 +16,7 @@ import Trendithon.SpinOff.domain.profile.repository.TechnicJpaRepository;
 import Trendithon.SpinOff.domain.profile.valid.exception.MemberNotFoundException;
 import Trendithon.SpinOff.domain.profile.valid.exception.ProfileNotFoundException;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,6 +33,7 @@ public class ProfileService {
     private final TechnicJpaRepository technicJpaRepository;
     private final ProfileJpaRepository profileJpaRepository;
     private final ProfileTechnicJpaRepository profileTechnicJpaRepository;
+    private final BoardRepository boardRepository;
 
     public boolean addTechnic(String memberId, Set<String> technics) {
         Optional<Member> optionalMember = memberJpaRepository.findByMemberId(memberId);
@@ -118,6 +122,8 @@ public class ProfileService {
             Optional<Set<ProfileTechnic>> technics = profileTechnicJpaRepository.findAllByProfileId(profile.getId());
             setTechnics(technics, information);
             information.setName(member.getName());
+            List<Board> boards = boardRepository.findAllByWriter(memberId);
+            information.setBoards(boards);
             return information;
         } else {
             throw new MemberNotFoundException("memberId with " + memberId + " not found");
