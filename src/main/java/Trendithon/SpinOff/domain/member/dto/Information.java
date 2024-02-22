@@ -18,4 +18,5 @@ public class Information {
     private String specificDuty;
     private String link;
     private Set<String> technics;
+    private String imageUrl;
 }
