@@ -1,6 +1,5 @@
 package Trendithon.SpinOff.domain.board.service;
 
-import Trendithon.SpinOff.domain.board.controller.UploadController;
 import Trendithon.SpinOff.domain.board.dto.BoardDto;
 import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
 import Trendithon.SpinOff.domain.board.entity.Board;
@@ -46,14 +45,9 @@ public class BoardService {
         board.setGithub(boardDTO.getGithub());
         board.setProjectFeatures(boardDTO.getProjectFeatures());
         board.setDistribution(boardDTO.getDistribution());
-        board.setBoardLike(boardDTO.getBoardLike());
+        board.setBoardLike(0);
         board.setWriter(currentUserEmail);
         board.setProjectImage(boardDTO.getProjectImage());
-
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String jsonString = objectMapper.writeValueAsString(boardDTO.getProjectMembers());
-//        board.setProjectMembers(jsonString);
-
         boardRepository.save(board);
     }
 
