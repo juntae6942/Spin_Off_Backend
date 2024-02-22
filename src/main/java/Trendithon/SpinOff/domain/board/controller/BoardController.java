@@ -38,8 +38,6 @@ public class BoardController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserEmail = authentication.getName(); // 현재 사용자의 이메일 가져오기
 
-        System.out.println(authentication);
-        System.out.println("currentUserEmail"+currentUserEmail);
 
 
         // 현재 사용자를 찾을 수 없는 경우 Forbidden 반환
