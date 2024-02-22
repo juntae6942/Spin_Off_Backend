@@ -9,6 +9,7 @@ import Trendithon.SpinOff.domain.board.repository.BoardRepository;
 import Trendithon.SpinOff.domain.board.repository.BoardSearchRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,21 +67,27 @@ public class BoardService {
         return boardSearchRepository.findByBoardTitleContaining(searchKeyword, pageable);
     }
 
-    public void saveUpdate(String boardDTO) throws JsonProcessingException {
+    public void saveUpdate(String boardDTO, Long boardId) throws JsonProcessingException {
+        // 기존 게시물을 확인하여 존재하는지 확인
+        Board existingBoard = boardRepository.findById(boardId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 ID의 게시물을 찾을 수 없습니다."));
+
+        // ObjectMapper를 사용하여 JSON 문자열을 BoardDto 객체로 변환
         ObjectMapper objectMapper = new ObjectMapper();
+        BoardDto updatedBoardDto = objectMapper.readValue(boardDTO, BoardDto.class);
+
+        // 기존 게시물의 필드들을 업데이트
+        existingBoard.setProjectName(updatedBoardDto.getProjectName());
+        existingBoard.setProjectDescription(updatedBoardDto.getProjectDescription());
+        existingBoard.setProjectBackground(updatedBoardDto.getProjectBackground());
+        existingBoard.setProjectFeatures(updatedBoardDto.getProjectFeatures());
         BoardDto boardDTO1 = objectMapper.readValue(boardDTO, BoardDto.class);
-        Board board = new Board();
-        board.setBno(boardDTO1.getBno());
-        board.setProjectName(boardDTO1.getProjectName());
-        //board.setContent(boardDTO1.getContent());
-        board.setBoardLike(boardDTO1.getBoardLike());
+        Board board=new Board();
+        board.setGithub(boardDTO1.getGithub());
+        // 필요한 필드들을 추가적으로 업데이트해 나갈 수 있습니다.
 
-        ObjectMapper objectMapper1 = new ObjectMapper();
-        String jsonString = objectMapper1.writeValueAsString(boardDTO1.getProjectImage());
-        board.setProjectImage(jsonString);
-
-        boardRepository.save(board);
-
+        // 기존 게시물 엔터티를 저장
+        boardRepository.save(existingBoard);
     }
 
     @Transactional

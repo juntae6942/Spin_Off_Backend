@@ -4,13 +4,11 @@ package Trendithon.SpinOff.domain.board.controller;
 import Trendithon.SpinOff.domain.board.dto.BoardDto;
 import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
 import Trendithon.SpinOff.domain.board.service.BoardService;
-import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.service.MemberService;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -49,6 +47,8 @@ public class BoardController {
 
         return ResponseEntity.ok("저장 성공");
     }
+
+
     @GetMapping("/popular/list")
     @Operation(summary = "좋아요 기준 인기 게시물")
     public ResponseEntity<List<BoardResponseDto>> boardpopularList(
@@ -106,12 +106,15 @@ public class BoardController {
         return new ResponseEntity<>(boardResponseDtoList, HttpStatus.OK);
     }
 
-    @PostMapping("/update")
+    @PostMapping("/update/{boardId}")
     @Operation(summary = "게시물 수정")
-    public ResponseEntity<String> update(@RequestBody String boardData) throws JsonProcessingException {
-        //System.out.println(boardData);
-        boardService.saveUpdate(boardData);
-        return ResponseEntity.ok("수정 성공");
+    public ResponseEntity<String> update(@RequestBody String boardData, @PathVariable Long boardId) throws JsonProcessingException {
+        try {
+            boardService.saveUpdate(boardData, boardId);
+            return ResponseEntity.ok("수정 성공");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/delete/{boardId}")
