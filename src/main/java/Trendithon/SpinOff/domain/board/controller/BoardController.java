@@ -45,7 +45,6 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("사용자를 찾을 수 없습니다.");
         }
 
-
         boardService.save(boardDto);
 
         return ResponseEntity.ok("저장 성공");
