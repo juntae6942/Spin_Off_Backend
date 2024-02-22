@@ -1,5 +1,6 @@
 package Trendithon.SpinOff.domain.board.controller;
 
+
 import Trendithon.SpinOff.domain.board.dto.BoardDto;
 import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
 import Trendithon.SpinOff.domain.board.service.BoardService;
@@ -9,7 +10,7 @@ import Trendithon.SpinOff.domain.profile.valid.exception.MemberNotFoundException
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,14 +23,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/project")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BoardController {
+
     private final BoardService boardService;
     private final MemberService memberService;
+
 
     @PostMapping(value = "/write")
     @Operation(summary = "글 생성")
@@ -42,13 +43,12 @@ public class BoardController {
         boardService.save(boardDto);
         return ResponseEntity.ok("저장 성공");
     }
-
     @GetMapping("/popular/list")
     @Operation(summary = "좋아요 기준 인기 게시물")
     public ResponseEntity<List<BoardResponseDto>> boardpopularList(
-            @PageableDefault(page = 0, size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(page = 0, size = 7, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        Page<BoardResponseDto> popularBoardResponsePage = boardService.boardPopularList(pageable).map(board -> {
+        Page<BoardResponseDto> popularBoardResponsePage = boardService.boardPopularList(pageable).map(board ->{
             try {
                 return BoardResponseDto.toDTO(board);
             } catch (JsonProcessingException e) {
@@ -63,9 +63,8 @@ public class BoardController {
     
     @GetMapping("/search/list")
     @Operation(summary = "검색 결과 게시물")
-    public ResponseEntity<Page<BoardResponseDto>> boardList(
-            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam(required = false) String searchKeyword) {
+    public ResponseEntity<Page<BoardResponseDto>> boardList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                                                            @RequestParam(required = false) String searchKeyword) {
         Page<BoardResponseDto> list;
         if (searchKeyword == null) {
             list = boardService.boardList(pageable).map(board -> {
@@ -93,9 +92,9 @@ public class BoardController {
 
     @GetMapping("/search/all")
     @Operation(summary = "전체 조회")
-    public ResponseEntity<List<BoardResponseDto>> search(@RequestParam(required = false) String title)
+    public ResponseEntity<List<BoardResponseDto>> search(@RequestParam(required = false) String projectName)
             throws JsonProcessingException {
-        List<BoardResponseDto> boardResponseDtoList = boardService.search(title);
+        List<BoardResponseDto> boardResponseDtoList = boardService.search(projectName);
         return new ResponseEntity<>(boardResponseDtoList, HttpStatus.OK);
     }
 

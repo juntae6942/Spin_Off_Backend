@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 public class BoardResponseDto {
     private Long bno;// id
-    private String title;// 제목
+    private String projectName;// 제목
     private String description;// 한줄 소개
     private String projBackground;//배경
     private String mainFeature;//주요기능
@@ -32,18 +32,15 @@ public class BoardResponseDto {
     public static BoardResponseDto toDTO(Board board) throws JsonProcessingException {
         BoardResponseDto boardResponseDto = new BoardResponseDto();
         boardResponseDto.setBno(board.getBno());
-        boardResponseDto.setTitle(board.getTitle());
-        boardResponseDto.setDescription(board.getDescription());
-        boardResponseDto.setProjBackground(board.getProjBackground());
-        boardResponseDto.setMainFeature(board.getMainFeature());
-        boardResponseDto.setImageUrl(board.getImageUrl());// 이미지 URL
-        boardResponseDto.setProjUrl(board.getProjUrl());
-        boardResponseDto.setGithubUrl(board.getGithubUrl());
-        boardResponseDto.setMemberPart(toList(board.getMemberPart()));
-        boardResponseDto.setTeamMember(board.getTeamMembers());
+        boardResponseDto.setProjectName(board.getProjectName());
+        boardResponseDto.setDescription(board.getProjectDescription());
+        boardResponseDto.setProjBackground(board.getProjectBackground());
+        boardResponseDto.setMainFeature(board.getProjectFeatures());
+        boardResponseDto.setImageUrl(board.getProjectImage());// 이미지 URL// 이미지 URL
+        boardResponseDto.setProjUrl(board.getDistribution());
+        boardResponseDto.setGithubUrl(board.getGithub());;
+        boardResponseDto.setTeamMember(board.getProjectMembers());
         boardResponseDto.setCategory(board.getCategory());
-        boardResponseDto.setContent(board.getContent());
-        boardResponseDto.setBoardLike(board.getBoardLike());
         boardResponseDto.setWriter(board.getWriter());
         return boardResponseDto;
     }
