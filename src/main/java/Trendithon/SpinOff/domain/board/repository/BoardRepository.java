@@ -13,4 +13,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("SELECT e FROM Board e WHERE COALESCE(:projectName, '') = '' OR e.projectName = :projectName")
     List<Board> findWithParams(@Param("projectName") String projectName);
 
+    List<Board> findAllByWriter(String memberId);
 }

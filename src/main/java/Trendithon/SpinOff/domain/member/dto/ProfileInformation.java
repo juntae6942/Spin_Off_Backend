@@ -1,5 +1,7 @@
 package Trendithon.SpinOff.domain.member.dto;
 
+import Trendithon.SpinOff.domain.board.entity.Board;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,4 +21,5 @@ public class ProfileInformation {
     private Set<String> technics;
     private String link;
     private Integer likeCount;
+    private List<Board> boards;
 }
