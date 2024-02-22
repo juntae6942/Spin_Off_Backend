@@ -56,14 +56,17 @@ public class BoardService {
 
         boardRepository.save(board);
     }
-    public Page<Board> boardList(Pageable pageable){
+
+    public Page<Board> boardList(Pageable pageable) {
         //findAll : 테스트보드라는 클래스가 담긴 List를 반환하는것을 확인할수있다
         return boardRepository.findAll(pageable);
     }
-    public Page<Board> boardPopularList(Pageable pageable){
+
+    public Page<Board> boardPopularList(Pageable pageable) {
         return boardPopularPostRepository.findByBoardPopularPost(pageable);
     }
-    public Page<Board> boardSearchList(String searchKeyword, Pageable pageable){
+
+    public Page<Board> boardSearchList(String searchKeyword, Pageable pageable) {
         return boardSearchRepository.findByBoardTitleContaining(searchKeyword, pageable);
     }
 
