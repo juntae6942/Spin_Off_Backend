@@ -9,5 +9,5 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class HeartProjectDto {
     private Long memberId;
-    private Long boardId;
+    private Long bno;
 }

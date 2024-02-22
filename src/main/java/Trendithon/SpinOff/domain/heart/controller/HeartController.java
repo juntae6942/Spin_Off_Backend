@@ -24,7 +24,7 @@ public class HeartController {
     @Operation(summary = "좋아요 추가")
     public ResponseEntity<ResponseResult<?>> insert(@RequestBody @Valid HeartProjectDto heartProjectDto) {
         try {
-            heartService.insertProject(heartProjectDto.getMemberId(), heartProjectDto.getBoardId());
+            heartService.insertProject(heartProjectDto.getMemberId(), heartProjectDto.getBno());
             return ResponseEntity.ok(ResponseResult.success("좋아요 추가 성공", null));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ResponseResult.failure("이미 좋아요 누름"));
@@ -35,7 +35,7 @@ public class HeartController {
     @Operation(summary = "좋아요 취소")
     public ResponseEntity<ResponseResult<?>> delete(@RequestBody @Valid HeartProjectDto heartProjectDto) {
         try {
-            heartService.deleteProject(heartProjectDto.getMemberId(), heartProjectDto.getBoardId());
+            heartService.deleteProject(heartProjectDto.getMemberId(), heartProjectDto.getBno());
             return ResponseEntity.ok(ResponseResult.success("좋아요 삭제 성공", null));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ResponseResult.failure("좋아요 안 눌렀넹?"));

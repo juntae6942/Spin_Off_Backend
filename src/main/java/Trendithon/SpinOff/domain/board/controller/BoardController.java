@@ -1,14 +1,16 @@
 package Trendithon.SpinOff.domain.board.controller;
 
+
 import Trendithon.SpinOff.domain.board.dto.BoardDto;
 import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
 import Trendithon.SpinOff.domain.board.service.BoardService;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.service.MemberService;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,25 +23,25 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/project")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BoardController {
+
     private final BoardService boardService;
     private final MemberService memberService;
+
 
     @PostMapping(value = "/write")
     @Operation(summary = "글 생성")
     public ResponseEntity<String> save(@RequestBody BoardDto boardDto) throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserEmail = authentication.getName(); // 현재 사용자의 이메일 가져오기
-        Member currentMember = memberService.findByEmail(currentUserEmail);
-        log.info("currentUserEmail" + currentUserEmail);
+
+
 
         // 현재 사용자를 찾을 수 없는 경우 Forbidden 반환
-        if (currentUserEmail == null) {
+        if (currentUserEmail   == null) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("사용자를 찾을 수 없습니다.");
         }
 
@@ -47,13 +49,12 @@ public class BoardController {
 
         return ResponseEntity.ok("저장 성공");
     }
-
     @GetMapping("/popular/list")
     @Operation(summary = "좋아요 기준 인기 게시물")
     public ResponseEntity<List<BoardResponseDto>> boardpopularList(
-            @PageableDefault(page = 0, size = 1, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(page = 0, size = 7, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        Page<BoardResponseDto> popularBoardResponsePage = boardService.boardPopularList(pageable).map(board -> {
+        Page<BoardResponseDto> popularBoardResponsePage = boardService.boardPopularList(pageable).map(board ->{
             try {
                 return BoardResponseDto.toDTO(board);
             } catch (JsonProcessingException e) {
@@ -69,9 +70,8 @@ public class BoardController {
 
     @GetMapping("/search/list")
     @Operation(summary = "검색 결과 게시물")
-    public ResponseEntity<Page<BoardResponseDto>> boardList(
-            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam(required = false) String searchKeyword) {
+    public ResponseEntity<Page<BoardResponseDto>> boardList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                                                            @RequestParam(required = false) String searchKeyword) {
         Page<BoardResponseDto> list;
         if (searchKeyword == null) {
             list = boardService.boardList(pageable).map(board -> {
@@ -100,9 +100,9 @@ public class BoardController {
 
     @GetMapping("/search/all")
     @Operation(summary = "전체 조회")
-    public ResponseEntity<List<BoardResponseDto>> search(@RequestParam(required = false) String title)
+    public ResponseEntity<List<BoardResponseDto>> search(@RequestParam(required = false) String projectName)
             throws JsonProcessingException {
-        List<BoardResponseDto> boardResponseDtoList = boardService.search(title);
+        List<BoardResponseDto> boardResponseDtoList = boardService.search(projectName);
         return new ResponseEntity<>(boardResponseDtoList, HttpStatus.OK);
     }
 
