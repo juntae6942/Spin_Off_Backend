@@ -34,10 +34,6 @@ public class BoardService {
 
     @Transactional
     public void save(BoardDto boardDTO) throws JsonProcessingException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserEmail = authentication.getName(); // 현재 사용자의 이메일 가져오기
-
-
         Board board = new Board();
         System.out.println(board);
         board.setTitle(boardDTO.getTitle());
@@ -50,7 +46,7 @@ public class BoardService {
         board.setTeamMembers(boardDTO.getTeamMembers());
         board.setContent(boardDTO.getContent());
         board.setBoardLike(boardDTO.getBoardLike());
-        board.setWriter(currentUserEmail);
+        board.setWriter(boardDTO.getWriter_id().toString());
         board.setImageUrl(boardDTO.getImageUrl());
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -59,14 +55,17 @@ public class BoardService {
 
         boardRepository.save(board);
     }
-    public Page<Board> boardList(Pageable pageable){
+
+    public Page<Board> boardList(Pageable pageable) {
         //findAll : 테스트보드라는 클래스가 담긴 List를 반환하는것을 확인할수있다
         return boardRepository.findAll(pageable);
     }
-    public Page<Board> boardPopularList(Pageable pageable){
+
+    public Page<Board> boardPopularList(Pageable pageable) {
         return boardPopularPostRepository.findByBoardPopularPost(pageable);
     }
-    public Page<Board> boardSearchList(String searchKeyword, Pageable pageable){
+
+    public Page<Board> boardSearchList(String searchKeyword, Pageable pageable) {
         return boardSearchRepository.findByBoardTitleContaining(searchKeyword, pageable);
     }
 

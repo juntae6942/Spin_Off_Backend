@@ -5,6 +5,7 @@ import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
 import Trendithon.SpinOff.domain.board.service.BoardService;
 import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.service.MemberService;
+import Trendithon.SpinOff.domain.profile.valid.exception.MemberNotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -34,17 +35,11 @@ public class BoardController {
     @Operation(summary = "글 생성")
     public ResponseEntity<String> save(@RequestBody BoardDto boardDto) throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserEmail = authentication.getName(); // 현재 사용자의 이메일 가져오기
-        Member currentMember = memberService.findByEmail(currentUserEmail);
-        log.info("currentUserEmail" + currentUserEmail);
-
-        // 현재 사용자를 찾을 수 없는 경우 Forbidden 반환
-        if (currentUserEmail == null) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("사용자를 찾을 수 없습니다.");
-        }
-
+        String memberId = authentication.getName(); // 현재 사용자의 이메일 가져오기
+        Member currentMember = memberService.findByMemberId(memberId)
+                .orElseThrow(() -> new MemberNotFoundException("사용자를 찾을 수 없습니다."));
+        boardDto.setWriter_id(currentMember.getId());
         boardService.save(boardDto);
-
         return ResponseEntity.ok("저장 성공");
     }
 
@@ -65,8 +60,7 @@ public class BoardController {
         List<BoardResponseDto> popularBoardResponseList = popularBoardResponsePage.getContent();
         return ResponseEntity.ok().body(popularBoardResponseList);
     }
-
-
+    
     @GetMapping("/search/list")
     @Operation(summary = "검색 결과 게시물")
     public ResponseEntity<Page<BoardResponseDto>> boardList(
@@ -97,7 +91,6 @@ public class BoardController {
         return ResponseEntity.ok().body(list);
     }
 
-
     @GetMapping("/search/all")
     @Operation(summary = "전체 조회")
     public ResponseEntity<List<BoardResponseDto>> search(@RequestParam(required = false) String title)
@@ -122,7 +115,7 @@ public class BoardController {
     }
 
     @GetMapping("/{boardId}")
-    @Operation(summary = "게시불id 기준으로 가져오기")
+    @Operation(summary = "게시물 id 기준으로 가져오기")
     public ResponseEntity<BoardResponseDto> showDetail(@PathVariable String boardId) throws JsonProcessingException {
         BoardResponseDto boardResponseDTO = boardService.findByBoardId(Long.parseLong(boardId));
         return new ResponseEntity<>(boardResponseDTO, HttpStatus.OK);
