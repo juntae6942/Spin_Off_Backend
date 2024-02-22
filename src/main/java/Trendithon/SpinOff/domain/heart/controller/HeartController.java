@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class HeartController {
-
     private final HeartService heartService;
 
     @PutMapping("/board/like")

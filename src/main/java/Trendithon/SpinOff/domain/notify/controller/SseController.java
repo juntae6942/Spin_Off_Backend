@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @Slf4j
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 public class SseController {
     private final NotificationService notificationService;
