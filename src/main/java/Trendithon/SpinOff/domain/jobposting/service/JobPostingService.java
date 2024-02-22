@@ -70,15 +70,18 @@ public class JobPostingService {
         return true;
     }
 
-    public boolean increaseViewCount(Long jobPostingId) {
+    public JobPosting increaseViewCount(Long jobPostingId) {
         Optional<JobPosting> optionalJobPosting = jobPostingJpaRepository.findById(jobPostingId);
         if (optionalJobPosting.isPresent()) {
             JobPosting jobPosting = optionalJobPosting.get();
             jobPosting.increaseViewCount();
-            jobPostingJpaRepository.save(jobPosting);
-            return true;
+            return jobPostingJpaRepository.save(jobPosting);
         } else {
             throw new JobPostingNotFoundException("jobPosting with jobPostingId " + jobPostingId + " not found");
         }
+    }
+
+    public List<JobPosting> findPopularJobPostings() {
+        return jobPostingJpaRepository.findPopularPosts();
     }
 }

@@ -14,7 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class JobPostingController {
     private final JobPostingService jobPostingService;
 
@@ -32,7 +35,7 @@ public class JobPostingController {
     }
 
     @GetMapping("/jobs")
-    public ResponseEntity<List<JobPosting>> getJobPostingsAfter(@RequestBody Time time) {
+    public ResponseEntity<List<JobPosting>> getJobPostingsAfter(@ModelAttribute Time time) {
         return ResponseEntity.ok().body(jobPostingService.findByDeadlineAfter(time.now()));
     }
 
@@ -43,15 +46,20 @@ public class JobPostingController {
         List<JobPosting> likedJobPosting = jobPostingService.findByLikedJobPosting(memberId);
         log.info("liked Job Posting = {}", likedJobPosting.get(0));
         return ResponseEntity.ok().body(likedJobPosting);
-    }   // 좋아요 기능에 따른 구현 필요
+    }
 
     @GetMapping("/jobs/search")
-    public ResponseEntity<List<JobPosting>> getJobPostings(@RequestBody SearchMessage searchMessage) {
+    public ResponseEntity<List<JobPosting>> getJobPostings(@ModelAttribute SearchMessage searchMessage) {
         String companyName = searchMessage.companyName();
         String jobTitle = searchMessage.jobTitle();
         LocalDateTime localDateTime = searchMessage.now();
         return ResponseEntity.ok()
                 .body(jobPostingService.findByDeadlineAfterAndContain(localDateTime, jobTitle, companyName));
+    }
+
+    @GetMapping("/jobs/popular")
+    public ResponseEntity<List<JobPosting>> findPopularJobPostings() {
+        return ResponseEntity.ok().body(jobPostingService.findPopularJobPostings());
     }
 
     @PostMapping("/job/add")
@@ -77,7 +85,7 @@ public class JobPostingController {
     }
 
     @PostMapping("/view/increase/{jobPostingId}")
-    public ResponseEntity<Boolean> increaseViewCount(@PathVariable Long jobPostingId) {
+    public ResponseEntity<JobPosting> increaseViewCount(@PathVariable Long jobPostingId) {
         log.info("jobPostingId = {}", jobPostingId);
         return ResponseEntity.ok().body(jobPostingService.increaseViewCount(jobPostingId));
     }
