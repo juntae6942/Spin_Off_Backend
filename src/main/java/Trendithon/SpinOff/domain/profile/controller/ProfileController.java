@@ -5,6 +5,7 @@ import Trendithon.SpinOff.domain.member.dto.Information;
 import Trendithon.SpinOff.domain.member.dto.ProfileInformation;
 import Trendithon.SpinOff.domain.profile.service.ProfileService;
 import Trendithon.SpinOff.domain.profile.valid.exception.IntroduceOutOfBoundException;
+import Trendithon.SpinOff.domain.profile.valid.exception.NotAuthorizedEditException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @AllArgsConstructor
 public class ProfileController {
     private final ProfileService profileService;
@@ -35,21 +37,30 @@ public class ProfileController {
 
     @PostMapping("/information/edit")
     public ResponseEntity<Boolean> editInformation(@Valid @RequestBody EditInformation editInformation,
-                                                   BindingResult bindingResult) {
+                                                   BindingResult bindingResult) throws NotAuthorizedEditException {
         if (bindingResult.hasErrors()) {
             throw new IntroduceOutOfBoundException("한 줄 소개의 길이가 22자를 넘었습니다.");
         }
-        boolean resultInfo = profileService.editInformation(editInformation);
-        boolean resultTechnic = profileService.editTechnics(editInformation.getMemberId(),
-                editInformation.getTechnics());
-        return ResponseEntity.ok(resultInfo && resultTechnic);
+        if (editInformation.getMemberId().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+            boolean resultInfo = profileService.editInformation(editInformation);
+            boolean resultTechnic = profileService.editTechnics(editInformation.getMemberId(),
+                    editInformation.getTechnics());
+            return ResponseEntity.ok(resultInfo && resultTechnic);
+        } else {
+            throw new NotAuthorizedEditException("프로필 수정 권한이 없습니다.");
+        }
     }
 
-    @GetMapping("/information/check")
+    @GetMapping("/information/check/my")
     public ResponseEntity<ProfileInformation> checkInformation() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String memberId = authentication.getName();
         log.info("memberId = {}", memberId);
+        return ResponseEntity.ok(profileService.checkInformation(memberId));
+    }
+
+    @GetMapping("/information/check/{memberId}")
+    public ResponseEntity<ProfileInformation> checkInformationOther(@PathVariable String memberId) {
         return ResponseEntity.ok(profileService.checkInformation(memberId));
     }
 }

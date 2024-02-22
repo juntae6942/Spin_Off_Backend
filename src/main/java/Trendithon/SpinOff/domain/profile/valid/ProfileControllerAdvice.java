@@ -3,6 +3,7 @@ package Trendithon.SpinOff.domain.profile.valid;
 import Trendithon.SpinOff.domain.profile.valid.exception.CheckMemberIdNotNullException;
 import Trendithon.SpinOff.domain.profile.valid.exception.IntroduceOutOfBoundException;
 import Trendithon.SpinOff.domain.profile.valid.exception.MemberNotFoundException;
+import Trendithon.SpinOff.domain.profile.valid.exception.NotAuthorizedEditException;
 import Trendithon.SpinOff.domain.profile.valid.exception.ProfileNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -32,5 +33,11 @@ public class ProfileControllerAdvice {
     public ResponseEntity<String> profileNotFoundExceptionHandle(EntityNotFoundException notFoundException) {
         log.error("error message = {}", notFoundException.getMessage());
         return ResponseEntity.badRequest().body(notFoundException.getMessage());
+    }
+
+    @ExceptionHandler(NotAuthorizedEditException.class)
+    public ResponseEntity<String> notAuthorizedExceptionHandle(NotAuthorizedEditException notAuthorizedEditException) {
+        log.error("error message = {}", notAuthorizedEditException.getMessage());
+        return ResponseEntity.badRequest().body(notAuthorizedEditException.getMessage());
     }
 }
