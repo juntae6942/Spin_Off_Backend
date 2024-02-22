@@ -9,6 +9,7 @@ import Trendithon.SpinOff.domain.member.service.MemberService;
 import Trendithon.SpinOff.domain.profile.valid.exception.MemberNotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,7 @@ public class BoardController {
         String memberId = authentication.getName(); // 현재 사용자의 이메일 가져오기
         Member currentMember = memberService.findByMemberId(memberId)
                 .orElseThrow(() -> new MemberNotFoundException("사용자를 찾을 수 없습니다."));
-        boardDto.setWriter_id(currentMember.getId());
+        boardDto.setWriter(currentMember.getId());
         boardService.save(boardDto);
         return ResponseEntity.ok("저장 성공");
     }
@@ -98,12 +99,15 @@ public class BoardController {
         return new ResponseEntity<>(boardResponseDtoList, HttpStatus.OK);
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update/{boardId}")
     @Operation(summary = "게시물 수정")
-    public ResponseEntity<String> update(@RequestBody String boardData) throws JsonProcessingException {
-        //System.out.println(boardData);
-        boardService.saveUpdate(boardData);
-        return ResponseEntity.ok("수정 성공");
+    public ResponseEntity<String> update(@RequestBody String boardData, @PathVariable Long boardId) throws JsonProcessingException {
+        try {
+            boardService.saveUpdate(boardData, boardId);
+            return ResponseEntity.ok("수정 성공");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/delete/{boardId}")
