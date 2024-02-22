@@ -41,8 +41,7 @@ cloud:
     s3:
       bucket: trendithonfile
     credentials:
-      access-key: AKIAZBAE57CCNJHI72ZY
-      secret-key: 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
+
     region:
       static: ap-northeast-2
       auto: false
