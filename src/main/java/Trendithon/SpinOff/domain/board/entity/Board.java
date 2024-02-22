@@ -62,7 +62,6 @@ import lombok.Setter;
         private String projectMembers;//팀원
         private String projectParts;
         private String teamMembers;//팀원
-        private String selectedParts;//팀원 파트
         private String category;//프로젝트 카테고리
         private Integer boardLike;// 좋아요
         private String writer;

@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
 public interface BoardSearchRepository extends JpaRepository<Board, Long> {
 
     @Query("SELECT b FROM Board b WHERE b.projectName LIKE %:projectName%")
-    Page<Board> findByBoardTitleContaining(@Param("projectName") String title, Pageable pageable);
+    Page<Board> findByBoardTitleContaining(@Param("projectName") String projectName, Pageable pageable);
 }

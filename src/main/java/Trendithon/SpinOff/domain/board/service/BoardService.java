@@ -1,5 +1,6 @@
 package Trendithon.SpinOff.domain.board.service;
 
+import Trendithon.SpinOff.domain.board.controller.UploadController;
 import Trendithon.SpinOff.domain.board.dto.BoardDto;
 import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
 import Trendithon.SpinOff.domain.board.entity.Board;
@@ -11,10 +12,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +31,10 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardSearchRepository boardSearchRepository;
     private final BoardPopularPostRepository boardPopularPostRepository;
-
-
     @Transactional
     public void save(BoardDto boardDTO) throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserEmail = authentication.getName(); // 현재 사용자의 이메일 가져오기
-
+        String currentUserEmail = authentication.getName(); // 현재 사용자의 이메일 가져오
 
         Board board = new Board();
         System.out.println(board);
@@ -45,15 +45,13 @@ public class BoardService {
         board.setGithub(boardDTO.getGithub());
         board.setProjectFeatures(boardDTO.getProjectFeatures());
         board.setDistribution(boardDTO.getDistribution());
-        String projectMembers = String.join(",", boardDTO.getProjectMembers());
-        board.setProjectMembers(projectMembers);
         board.setBoardLike(boardDTO.getBoardLike());
         board.setWriter(currentUserEmail);
         board.setProjectImage(boardDTO.getProjectImage());
 
 //        ObjectMapper objectMapper = new ObjectMapper();
-//        String jsonString = objectMapper.writeValueAsString(boardDTO.getMemberPart());
-//        board.setMemberPart(jsonString);
+//        String jsonString = objectMapper.writeValueAsString(boardDTO.getProjectMembers());
+//        board.setProjectMembers(jsonString);
 
         boardRepository.save(board);
     }
@@ -86,8 +84,8 @@ public class BoardService {
     }
 
     @Transactional
-    public List<BoardResponseDto> search(String title) throws JsonProcessingException {
-        List<Board> boardEntities = boardRepository.findWithParams(title);
+    public List<BoardResponseDto> search(String projectName) throws JsonProcessingException {
+        List<Board> boardEntities = boardRepository.findWithParams(projectName);
         List<BoardResponseDto> boardResponseDtoList = new ArrayList<>();
         for (Board board : boardEntities) {
             boardResponseDtoList.add(BoardResponseDto.toDTO(board));

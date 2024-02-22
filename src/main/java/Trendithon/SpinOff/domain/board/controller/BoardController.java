@@ -30,16 +30,15 @@ public class BoardController {
 
     private final BoardService boardService;
     private final MemberService memberService;
-    private final AmazonS3Client amazonS3Client;
 
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+
     @PostMapping(value = "/write")
     @Operation(summary = "글 생성")
     public ResponseEntity<String> save(@RequestBody BoardDto boardDto) throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserEmail = authentication.getName(); // 현재 사용자의 이메일 가져오기
-        Member currentMember = memberService.findByEmail(currentUserEmail);
+
+        System.out.println(authentication);
         System.out.println("currentUserEmail"+currentUserEmail);
 
 
@@ -104,9 +103,9 @@ public class BoardController {
 
     @GetMapping("/search/all")
     @Operation(summary = "전체 조회")
-    public ResponseEntity<List<BoardResponseDto>> search(@RequestParam(required = false) String title)
+    public ResponseEntity<List<BoardResponseDto>> search(@RequestParam(required = false) String projectName)
             throws JsonProcessingException {
-        List<BoardResponseDto> boardResponseDtoList = boardService.search(title);
+        List<BoardResponseDto> boardResponseDtoList = boardService.search(projectName);
         return new ResponseEntity<>(boardResponseDtoList, HttpStatus.OK);
     }
 

@@ -22,8 +22,8 @@ public class BoardResponseDto {
     private String imageUrl;// 이미지 URL
     private String projUrl;//배포 URL
     private String githubUrl;//깃허브 링크
-    private List<String> projectMembers;//팀원
-    private List<String> selectedParts;//팀원 파트
+    private List<String> memberPart;//팀원
+    private String teamMember;//팀원
     private String category;//프로젝트 카테고리
     private String content;// 내용
     private Integer boardLike;// 좋아요
@@ -36,12 +36,10 @@ public class BoardResponseDto {
         boardResponseDto.setDescription(board.getProjectDescription());
         boardResponseDto.setProjBackground(board.getProjectBackground());
         boardResponseDto.setMainFeature(board.getProjectFeatures());
-        boardResponseDto.setImageUrl(board.getProjectImage());// 이미지 URL
-        boardResponseDto.setImageUrl(board.getProjectImage());// 이미지 URL
+        boardResponseDto.setImageUrl(board.getProjectImage());// 이미지 URL// 이미지 URL
         boardResponseDto.setProjUrl(board.getDistribution());
         boardResponseDto.setGithubUrl(board.getGithub());;
-        boardResponseDto.setProjectMembers(toList(board.getProjectMembers()));
-        boardResponseDto.setSelectedParts(toList(board.getSelectedParts()));
+        boardResponseDto.setTeamMember(board.getProjectMembers());
         boardResponseDto.setCategory(board.getCategory());
         boardResponseDto.setWriter(board.getWriter());
         return boardResponseDto;
