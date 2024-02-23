@@ -18,8 +18,9 @@ public class BoardDto {
     //private List<String> memberPart;//팀원
     private String distribution;//배포 URL
     private String github;//깃허브 링크
-    private List<String> projectMembers;//팀원
+    private List<String> selectedParts;
+    private List<String> projectMembers;
     private String category;//프로젝트 카테고리
     private Integer boardLike;// 좋아요
-    private Long writer; // 작성자
+    private String writer; // 작성자
 }

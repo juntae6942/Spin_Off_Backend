@@ -3,16 +3,14 @@ package Trendithon.SpinOff.domain.member.entity;
 import Trendithon.SpinOff.domain.profile.entity.Profile;
 import Trendithon.SpinOff.global.jwt.entity.Authority;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
