@@ -53,11 +53,11 @@ public class initData {
                 .email("coy@naver.com")
                 .build());
         JobPosting jobPosting = JobPosting.builder()
-                .logoUrl("https://abcdef:8080")
-                .companyName("coy")
+                .logoUrl("https://s3.ap-northeast-2.amazonaws.com/trendithon.enterprise.logo/%EA%B5%90%EB%B3%B4%EC%83%9D%EB%AA%85%EB%B3%B4%ED%97%98.jpg")
+                .companyName("교보생명보험")
                 .viewCount(0)
                 .applicantsCount(10)
-                .jobTitle("코이물산")
+                .jobTitle("백엔드 채용 공고")
                 .type(REGULAR)
                 .likeCount(0)
                 .deadLine(LocalDateTime.of(2024,1,3,10,10))
@@ -65,11 +65,11 @@ public class initData {
                 .build();
         jobPostingJpaRepository.save(jobPosting);
         JobPosting jobPosting1 = JobPosting.builder()
-                .logoUrl("https://abcdef:8080")
-                .companyName("coy123")
+                .logoUrl("https://s3.ap-northeast-2.amazonaws.com/trendithon.enterprise.logo/%EA%B8%88%ED%98%B8%EC%84%9D%EC%9C%A0%ED%99%94%ED%95%99.jpg")
+                .companyName("금호석유화학")
                 .viewCount(0)
                 .applicantsCount(10)
-                .jobTitle("코이아카데미")
+                .jobTitle("프런트 채용 공고")
                 .type(REGULAR)
                 .likeCount(0)
                 .deadLine(LocalDateTime.of(2024,1,3,10,10))
@@ -77,16 +77,90 @@ public class initData {
                 .build();
         jobPostingJpaRepository.save(jobPosting1);
         JobPosting jobPosting2 = JobPosting.builder()
-                .logoUrl("https://abcdef:8080")
-                .companyName("coy123")
+                .logoUrl("https://s3.ap-northeast-2.amazonaws.com/trendithon.enterprise.logo/%EA%B8%88%ED%98%B8%EC%95%84%EC%8B%9C%EC%95%84%EB%82%98.png")
+                .companyName("금호아시아나")
                 .viewCount(0)
                 .applicantsCount(10)
-                .jobTitle("코이바이오")
+                .jobTitle("기획자 채용 공고")
                 .type(REGULAR)
                 .likeCount(0)
                 .deadLine(LocalDateTime.of(2024,1,3,10,10))
                 .level(NEWCOMER)
                 .build();
         jobPostingJpaRepository.save(jobPosting2);
+        JobPosting jobPosting3 = JobPosting.builder()
+                .logoUrl("https://s3.ap-northeast-2.amazonaws.com/trendithon.enterprise.logo/%EB%84%A4%EC%9D%B4%EB%B2%84.png")
+                .companyName("네이버")
+                .viewCount(0)
+                .applicantsCount(10)
+                .jobTitle("AI 데이터 분석 엔지니어 공고")
+                .type(REGULAR)
+                .likeCount(0)
+                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .level(NEWCOMER)
+                .build();
+        jobPostingJpaRepository.save(jobPosting3);
+        JobPosting jobPosting4 = JobPosting.builder()
+                .logoUrl("https://s3.ap-northeast-2.amazonaws.com/trendithon.enterprise.logo/%EB%84%A5%EC%8A%A8.png")
+                .companyName("넥슨")
+                .viewCount(0)
+                .applicantsCount(10)
+                .jobTitle("프로그램 엔지니어 공고")
+                .type(REGULAR)
+                .likeCount(0)
+                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .level(NEWCOMER)
+                .build();
+        jobPostingJpaRepository.save(jobPosting4);
+        JobPosting jobPosting5 = JobPosting.builder()
+                .logoUrl("https://s3.ap-northeast-2.amazonaws.com/trendithon.enterprise.logo/%EB%84%B7%EB%A7%88%EB%B8%94.jpg")
+                .companyName("넷마블")
+                .viewCount(0)
+                .applicantsCount(10)
+                .jobTitle("UI 디자이너 채용 공고")
+                .type(REGULAR)
+                .likeCount(0)
+                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .level(NEWCOMER)
+                .build();
+        jobPostingJpaRepository.save(jobPosting5);
+        JobPosting jobPosting6 = JobPosting.builder()
+                .logoUrl("https://s3.ap-northeast-2.amazonaws.com/trendithon.enterprise.logo/%EB%86%8D%ED%98%91.png")
+                .companyName("농협")
+                .viewCount(0)
+                .applicantsCount(10)
+                .jobTitle("데이터 분석 엔지니어 채용 공고")
+                .type(REGULAR)
+                .likeCount(0)
+                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .level(NEWCOMER)
+                .build();
+        jobPostingJpaRepository.save(jobPosting6);
+        JobPosting jobPosting7 = JobPosting.builder()
+                .logoUrl("https://s3.ap-northeast-2.amazonaws.com/trendithon.enterprise.logo/%EB%8C%80%EB%A6%BC.jpg")
+                .companyName("대림")
+                .viewCount(0)
+                .applicantsCount(10)
+                .jobTitle("ML 엔지니어 채용 공고")
+                .type(REGULAR)
+                .likeCount(0)
+                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .level(NEWCOMER)
+                .build();
+        jobPostingJpaRepository.save(jobPosting7);
+        JobPosting jobPosting8 = JobPosting.builder()
+                .logoUrl("https://s3.ap-northeast-2.amazonaws.com/trendithon.enterprise.logo/%EB%84%A4%EC%9D%B4%EB%B2%84.png")
+                .companyName("네이버")
+                .viewCount(0)
+                .applicantsCount(10)
+                .jobTitle("결제 시스템 관리 백엔드 채용 공고")
+                .type(REGULAR)
+                .likeCount(0)
+                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .level(NEWCOMER)
+                .build();
+        jobPostingJpaRepository.save(jobPosting8);
+
     }
+
 }
