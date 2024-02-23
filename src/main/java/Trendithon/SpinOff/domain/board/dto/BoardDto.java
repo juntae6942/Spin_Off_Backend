@@ -15,7 +15,6 @@ public class BoardDto {
     private String projectBackground;//배경
     private String projectFeatures;//주요기능
     private String projectImage;// 이미지 URL
-    //private List<String> memberPart;//팀원
     private String distribution;//배포 URL
     private String github;//깃허브 링크
     private List<String> selectedParts;
