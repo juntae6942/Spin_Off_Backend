@@ -31,7 +31,6 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-    private final MemberService memberService;
 
 
     @PostMapping(value = "/write")
@@ -45,10 +44,6 @@ public class BoardController {
         if (currentUserEmail   == null) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("사용자를 찾을 수 없습니다.");
         }
-//        String memberId = authentication.getName(); // 현재 사용자의 이메일 가져오기
-//        Member currentMember = memberService.findByMemberId(memberId)
-//                .orElseThrow(() -> new MemberNotFoundException("사용자를 찾을 수 없습니다."));
-//        boardDto.setWriter(currentMember.getId());
 
         boardService.save(boardDto);
 

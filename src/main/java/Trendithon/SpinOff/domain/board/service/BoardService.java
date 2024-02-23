@@ -41,13 +41,18 @@ public class BoardService {
         board.setProjectName(boardDTO.getProjectName());
         board.setProjectDescription(boardDTO.getProjectDescription());
         board.setProjectBackground(boardDTO.getProjectBackground());
-        board.setCategory(boardDTO.getCategory());
-        board.setGithub(boardDTO.getGithub());
         board.setProjectFeatures(boardDTO.getProjectFeatures());
+        board.setProjectImage(boardDTO.getProjectImage());
         board.setDistribution(boardDTO.getDistribution());
+        board.setGithub(boardDTO.getGithub());
+        board.setMember1(boardDTO.getMember1());
+        board.setMember2(boardDTO.getMember2());
+        board.setMember3(boardDTO.getMember3());
+        board.setMember4(boardDTO.getMember4());
+        board.setMember5(boardDTO.getMember5());
+        board.setCategory(boardDTO.getCategory());
         board.setBoardLike(0);
         board.setWriter(currentUserEmail);
-        board.setProjectImage(boardDTO.getProjectImage());
         boardRepository.save(board);
     }
 

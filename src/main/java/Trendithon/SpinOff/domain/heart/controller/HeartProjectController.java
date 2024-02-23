@@ -3,9 +3,7 @@ package Trendithon.SpinOff.domain.heart.controller;
 import Trendithon.SpinOff.domain.board.entity.Board;
 import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
 import Trendithon.SpinOff.domain.heart.entity.HeartProject;
-import Trendithon.SpinOff.domain.heart.dto.HeartProjectDto;
 import Trendithon.SpinOff.domain.heart.repository.HeartProjectRepository;
-import Trendithon.SpinOff.domain.member.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
+
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class HeartProjectController {
@@ -36,12 +33,16 @@ public class HeartProjectController {
             BoardResponseDto responseDto = new BoardResponseDto();
             responseDto.setBno(board.getBno());
             responseDto.setProjectName(board.getProjectName());
-            responseDto.setDescription(board.getProjectDescription());
-            responseDto.setMainFeature(board.getProjectFeatures());
-            responseDto.setImageUrl(board.getProjectImage());
-            responseDto.setGithubUrl(board.getGithub());
-            responseDto.setSelectedPart(Collections.singletonList(board.getSelectedParts()));
-            responseDto.setProjectMembers(Collections.singletonList(board.getProjectMembers()));
+            responseDto.setProjectDescription(board.getProjectDescription());
+            responseDto.setProjectBackground(board.getProjectBackground());
+            responseDto.setProjectFeatures(board.getProjectFeatures());
+            responseDto.setProjectImage(board.getProjectImage());
+            responseDto.setGithub(board.getGithub());
+            responseDto.setMember1(board.getMember1());
+            responseDto.setMember2(board.getMember2());
+            responseDto.setMember3(board.getMember3());
+            responseDto.setMember4(board.getMember4());
+            responseDto.setMember5(board.getMember5());
             responseDto.setCategory(board.getCategory());
             responseDto.setBoardLike(board.getBoardLike());
             responseDto.setWriter(board.getWriter());
