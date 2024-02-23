@@ -24,7 +24,7 @@ import lombok.Setter;
         private String distribution;//배포 URL
         private String github;//깃허브 링크
         private String projectMembers;//팀원
-        private String projectParts;
+        private String selectedParts;
         private String teamMembers;//팀원
         private String category;//프로젝트 카테고리
         private Integer boardLike;// 좋아요

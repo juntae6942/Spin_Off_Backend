@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,8 +23,8 @@ public class BoardResponseDto {
     private String imageUrl;// 이미지 URL
     private String projUrl;//배포 URL
     private String githubUrl;//깃허브 링크
-    private List<String> memberPart;//팀원
-    private String teamMember;//팀원
+    private List<String> selectedPart;
+    private List<String> projectMembers;
     private String category;//프로젝트 카테고리
     private String content;// 내용
     private Integer boardLike;// 좋아요
@@ -39,7 +40,8 @@ public class BoardResponseDto {
         boardResponseDto.setImageUrl(board.getProjectImage());// 이미지 URL// 이미지 URL
         boardResponseDto.setProjUrl(board.getDistribution());
         boardResponseDto.setGithubUrl(board.getGithub());;
-        boardResponseDto.setTeamMember(board.getProjectMembers());
+        boardResponseDto.setProjectMembers(Collections.singletonList(board.getProjectMembers()));
+        boardResponseDto.setSelectedPart(Collections.singletonList(board.getSelectedParts()));
         boardResponseDto.setCategory(board.getCategory());
         boardResponseDto.setWriter(board.getWriter());
         boardResponseDto.setBoardLike(board.getBoardLike());
