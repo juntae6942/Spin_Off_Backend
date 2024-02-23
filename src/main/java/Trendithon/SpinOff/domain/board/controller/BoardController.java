@@ -3,6 +3,7 @@ package Trendithon.SpinOff.domain.board.controller;
 
 import Trendithon.SpinOff.domain.board.dto.BoardDto;
 import Trendithon.SpinOff.domain.board.dto.BoardResponseDto;
+import Trendithon.SpinOff.domain.board.entity.Board;
 import Trendithon.SpinOff.domain.board.service.BoardService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/project")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BoardController {
 
     private final BoardService boardService;

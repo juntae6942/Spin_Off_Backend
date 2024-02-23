@@ -1,6 +1,5 @@
 package Trendithon.SpinOff.domain.heart.service;
 
-
 import Trendithon.SpinOff.domain.board.entity.Board;
 import Trendithon.SpinOff.domain.heart.entity.HeartJobPosting;
 import Trendithon.SpinOff.domain.heart.entity.HeartProject;
@@ -14,7 +13,11 @@ import Trendithon.SpinOff.domain.member.entity.Member;
 import Trendithon.SpinOff.domain.member.repository.MemberJpaRepository;
 
 import Trendithon.SpinOff.domain.profile.valid.exception.MemberNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,9 +75,7 @@ public class HeartService {
 
         board.setBoardLike(board.getBoardLike() - 1);
         boardRepository.save(board);
-
     }
-
 
     @Transactional
     public void insertJobPosting(String memberId, Long jobPostingId) throws Exception {
@@ -121,5 +122,11 @@ public class HeartService {
 
         jobPosting.decreaseLikeCount();
         jobPostingJpaRepository.save(jobPosting);
+    }
+
+    public List<Board> findAllByMemberName(String memberId) {
+        List<HeartProject> likes = heartProjectRepository.findAllByMemberName(memberId);
+        List<Long> boardIds = likes.stream().map(like -> like.getBoard().getBno()).toList();
+        return boardRepository.findAllByBnoIn(boardIds);
     }
 }

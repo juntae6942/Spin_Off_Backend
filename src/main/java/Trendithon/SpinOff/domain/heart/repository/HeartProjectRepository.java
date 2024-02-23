@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface HeartProjectRepository extends JpaRepository<HeartProject, Long> {
     Optional<HeartProject> findByMemberAndBoard(Member member, Board board);
     List<HeartProject> findByMemberName(String memberName);
+
+    List<HeartProject> findAllByMemberName(String memberName);
 }

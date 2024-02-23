@@ -2,6 +2,7 @@ package Trendithon.SpinOff.domain.heart.entity;
 
 import Trendithon.SpinOff.domain.board.entity.Board;
 import Trendithon.SpinOff.domain.member.entity.Member;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class HeartProject {
 
     private String memberName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bno")
     private Board board;
 
