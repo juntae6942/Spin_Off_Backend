@@ -34,7 +34,17 @@ public class BoardService {
     private final BoardPopularPostRepository boardPopularPostRepository;
 
     private List<String> parseMembers(String membersString) {
-        return Arrays.asList(membersString.split(","));
+        List<String> members = Arrays.asList(membersString.split(","));
+        List<String> parsedMembers = new ArrayList<>();
+        // 최대 5명까지만 설정하고 나머지는 null로 채우기
+        for (int i = 0; i < 5; i++) {
+            if (i < members.size()) {
+                parsedMembers.add(members.get(i));
+            } else {
+                parsedMembers.add(null);
+            }
+        }
+        return parsedMembers;
     }
     @Transactional
     public void save(BoardDto boardDTO) throws JsonProcessingException {
