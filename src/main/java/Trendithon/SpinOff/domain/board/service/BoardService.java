@@ -72,16 +72,25 @@ public class BoardService {
         // 기존 게시물을 확인하여 존재하는지 확인
         Board existingBoard = boardRepository.findById(boardId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 ID의 게시물을 찾을 수 없습니다."));
-
         // ObjectMapper를 사용하여 JSON 문자열을 BoardDto 객체로 변환
         ObjectMapper objectMapper = new ObjectMapper();
         BoardDto updatedBoardDto = objectMapper.readValue(boardDTO, BoardDto.class);
-
         // 기존 게시물의 필드들을 업데이트
         existingBoard.setProjectName(updatedBoardDto.getProjectName());
         existingBoard.setProjectDescription(updatedBoardDto.getProjectDescription());
         existingBoard.setProjectBackground(updatedBoardDto.getProjectBackground());
         existingBoard.setProjectFeatures(updatedBoardDto.getProjectFeatures());
+        existingBoard.setProjectImage(updatedBoardDto.getProjectImage());
+        existingBoard.setDistribution(updatedBoardDto.getDistribution());
+        existingBoard.setProjectFeatures(updatedBoardDto.getProjectFeatures());
+        existingBoard.setProjectBackground(updatedBoardDto.getProjectBackground());
+        existingBoard.setGithub(updatedBoardDto.getGithub());
+        existingBoard.setProjectImage(updatedBoardDto.getProjectImage());
+        existingBoard.setMember1(updatedBoardDto.getMember1());
+        existingBoard.setMember2(updatedBoardDto.getMember2());
+        existingBoard.setMember3(updatedBoardDto.getMember3());
+        existingBoard.setMember4(updatedBoardDto.getMember4());
+        existingBoard.setMember5(updatedBoardDto.getMember5());
         BoardDto boardDTO1 = objectMapper.readValue(boardDTO, BoardDto.class);
         Board board=new Board();
         board.setGithub(boardDTO1.getGithub());

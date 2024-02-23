@@ -37,11 +37,16 @@ public class BoardResponseDto {
         boardResponseDto.setBno(board.getBno());
         boardResponseDto.setProjectName(board.getProjectName());
         boardResponseDto.setProjectDescription(board.getProjectDescription());
+        boardResponseDto.setDistribution(board.getDistribution());
         boardResponseDto.setProjectBackground(board.getProjectBackground());
         boardResponseDto.setProjectFeatures(board.getProjectFeatures());
         boardResponseDto.setProjectImage(board.getProjectImage());// 이미지 URL// 이미지 URL
-        boardResponseDto.setDistribution(board.getDistribution());
-        boardResponseDto.setGithub(board.getGithub());;
+        boardResponseDto.setMember1(board.getMember1());
+        boardResponseDto.setMember2(board.getMember2());
+        boardResponseDto.setMember3(board.getMember3());
+        boardResponseDto.setMember4(board.getMember4());
+        boardResponseDto.setMember5(board.getMember5());
+        boardResponseDto.setGithub(board.getGithub());
         boardResponseDto.setCategory(board.getCategory());
         boardResponseDto.setWriter(board.getWriter());
         boardResponseDto.setBoardLike(board.getBoardLike());
