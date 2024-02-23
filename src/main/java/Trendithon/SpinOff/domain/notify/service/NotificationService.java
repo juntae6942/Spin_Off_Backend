@@ -88,8 +88,9 @@ public class NotificationService {
         if (optionalBoard.isPresent()) {
             Board board = optionalBoard.get();
             Member member = validUser(board.getWriter());
+            String imageUrl = member.getProfile().getImageUrl();
             String comment = liker + "가 " + board.getProjectName() + "을 좋아합니다.";
-            LikeMessage likeMessage = new LikeMessage(member.getMemberId(), comment, board.getProjectName());
+            LikeMessage likeMessage = new LikeMessage(member.getMemberId(), comment, board.getProjectName(), imageUrl);
             notify(member.getId(), likeMessage, comment, "like");
         }
     }
