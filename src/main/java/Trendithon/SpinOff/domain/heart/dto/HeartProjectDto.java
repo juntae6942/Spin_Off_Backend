@@ -8,6 +8,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class HeartProjectDto {
-    private Long memberId;
+    private String memberId;
     private Long bno;
 }

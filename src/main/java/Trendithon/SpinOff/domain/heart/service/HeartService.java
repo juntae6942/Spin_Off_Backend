@@ -31,8 +31,8 @@ public class HeartService {
     private final JobPostingJpaRepository jobPostingJpaRepository;
 
     @Transactional
-    public void insertProject(Long memberId, Long boardId) throws Exception {
-        Member member = memberRepository.findById(memberId)
+    public void insertProject(String memberId, Long boardId) throws Exception {
+        Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(
                         "Could not found member id : " + memberId));
 
@@ -58,9 +58,9 @@ public class HeartService {
     }
 
     @Transactional
-    public void deleteProject(Long memberId, Long boardId) {
+    public void deleteProject(String memberId, Long boardId) {
 
-        Member member = memberRepository.findById(memberId)
+        Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(
                         "Could not found member id : " + memberId));
 
