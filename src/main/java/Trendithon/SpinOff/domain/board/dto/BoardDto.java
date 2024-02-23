@@ -1,5 +1,6 @@
 package Trendithon.SpinOff.domain.board.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 public class BoardDto {
     private Long bno;// id
     private String projectName;// 제목
