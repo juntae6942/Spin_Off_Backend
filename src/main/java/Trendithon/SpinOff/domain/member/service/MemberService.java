@@ -30,7 +30,6 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final AuthorityJpaRepository authorityJpaRepository;
 
-
     @Transactional
     public ResponseEntity<Boolean> signUp(SignUpDto memberDto) {
         if (memberJpaRepository.findByMemberId(memberDto.getMemberId()).orElse(null) != null) {

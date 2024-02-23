@@ -97,7 +97,6 @@ public class BoardService {
         return boardResponseDtoList;
     }
 
-
     @Transactional
     public BoardResponseDto findByBoardId(Long boardId) throws JsonProcessingException {
         Optional<Board> boardEntityOptional = boardRepository.findById(boardId);
