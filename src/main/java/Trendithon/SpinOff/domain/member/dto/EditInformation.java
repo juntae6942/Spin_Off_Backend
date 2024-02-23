@@ -20,4 +20,5 @@ public class EditInformation {
     private String link;
     private Set<String> technics;
     private String imageUrl;
+    private String openChatting;
 }

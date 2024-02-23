@@ -23,4 +23,5 @@ public class ProfileInformation {
     private Integer likeCount;
     private List<Board> boards;
     private String imageUrl;
+    private String openChatting;
 }
