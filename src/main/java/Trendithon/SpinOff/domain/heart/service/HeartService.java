@@ -80,8 +80,8 @@ public class HeartService {
 
 
     @Transactional
-    public void insertJobPosting(Long memberId, Long jobPostingId) throws Exception {
-        Member member = memberRepository.findById(memberId)
+    public void insertJobPosting(String memberId, Long jobPostingId) throws Exception {
+        Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(
                         "Could not found member id : " + memberId));
 
@@ -107,9 +107,9 @@ public class HeartService {
     }
 
     @Transactional
-    public void deleteJobPosting(Long memberId, Long jobPostingId) {
+    public void deleteJobPosting(String memberId, Long jobPostingId) {
 
-        Member member = memberRepository.findById(memberId)
+        Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(
                         "Could not found member id : " + memberId));
 
