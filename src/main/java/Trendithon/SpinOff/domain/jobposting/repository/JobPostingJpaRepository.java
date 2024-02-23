@@ -15,7 +15,7 @@ public interface JobPostingJpaRepository extends JpaRepository<JobPosting, Long>
                                                                                      String jobTitle,
                                                                                      String name);
 
-    List<JobPosting> findByDeadLineAfter(LocalDateTime localDateTime);
+    List<JobPosting> findAllByDeadLineAfter(LocalDateTime localDateTime);
 
     @Query("SELECT p FROM JobPosting p ORDER BY p.viewCount + p.likeCount DESC")
     List<JobPosting> findPopularPosts();
