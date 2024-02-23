@@ -31,12 +31,14 @@ public class Profile {
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProfileTechnic> profileTechnics = new HashSet<>();
     private String link;
+    private String imageUrl;
 
     public void add(Information information) {
         this.introduce = information.getIntroduce();
         this.job = information.getJob();
         this.specificDuty = information.getSpecificDuty();
         this.link = information.getLink();
+        this.imageUrl = information.getImageUrl();
     }
 
     public boolean edit(EditInformation editInformation) {
@@ -52,6 +54,9 @@ public class Profile {
         if (editInformation.getLink() != null && !editInformation.getLink().isEmpty()) {
             this.link = editInformation.getLink();
         }
+        if (editInformation.getImageUrl() != null & !editInformation.getImageUrl().isEmpty()) {
+            this.imageUrl = editInformation.getImageUrl();
+        }
         return true;
     }
 
@@ -61,6 +66,7 @@ public class Profile {
                 .job(job)
                 .specificDuty(specificDuty)
                 .link(link)
+                .imageUrl(imageUrl)
                 .build();
     }
 }

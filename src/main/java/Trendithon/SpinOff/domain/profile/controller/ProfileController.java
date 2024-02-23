@@ -63,4 +63,9 @@ public class ProfileController {
     public ResponseEntity<ProfileInformation> checkInformationOther(@PathVariable String memberId) {
         return ResponseEntity.ok(profileService.checkInformation(memberId));
     }
+
+    @GetMapping("/information/profileImage/{memberId}")
+    public ResponseEntity<String> checkProfileImage(@PathVariable String memberId) {
+        return ResponseEntity.ok(profileService.checkProfileImage(memberId));
+    }
 }

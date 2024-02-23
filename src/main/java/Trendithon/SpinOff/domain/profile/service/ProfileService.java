@@ -142,4 +142,10 @@ public class ProfileService {
             throw new ProfileNotFoundException("memberId with " + information.getName() + " not found");
         }
     }
+
+    public String checkProfileImage(String memberId) {
+        Member member = memberJpaRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new MemberNotFoundException("memberId with " + memberId + " not found"));
+        return member.getProfile().getImageUrl();
+    }
 }
