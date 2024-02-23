@@ -60,7 +60,7 @@ public class initData {
                 .jobTitle("백엔드 채용 공고")
                 .type(REGULAR)
                 .likeCount(0)
-                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .deadLine(LocalDateTime.of(2024,7,3,10,10))
                 .level(NEWCOMER)
                 .build();
         jobPostingJpaRepository.save(jobPosting);
@@ -72,7 +72,7 @@ public class initData {
                 .jobTitle("프런트 채용 공고")
                 .type(REGULAR)
                 .likeCount(0)
-                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .deadLine(LocalDateTime.of(2024,8,3,10,10))
                 .level(NEWCOMER)
                 .build();
         jobPostingJpaRepository.save(jobPosting1);
@@ -84,7 +84,7 @@ public class initData {
                 .jobTitle("기획자 채용 공고")
                 .type(REGULAR)
                 .likeCount(0)
-                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .deadLine(LocalDateTime.of(2024,9,3,10,10))
                 .level(NEWCOMER)
                 .build();
         jobPostingJpaRepository.save(jobPosting2);
@@ -96,7 +96,7 @@ public class initData {
                 .jobTitle("AI데이터분석 엔지니어")
                 .type(REGULAR)
                 .likeCount(0)
-                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .deadLine(LocalDateTime.of(2024,10,3,10,10))
                 .level(NEWCOMER)
                 .build();
         jobPostingJpaRepository.save(jobPosting3);
@@ -108,7 +108,7 @@ public class initData {
                 .jobTitle("프로그램 엔지니어")
                 .type(REGULAR)
                 .likeCount(0)
-                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .deadLine(LocalDateTime.of(2024,5,3,10,10))
                 .level(NEWCOMER)
                 .build();
         jobPostingJpaRepository.save(jobPosting4);
@@ -120,7 +120,7 @@ public class initData {
                 .jobTitle("UI디자이너 채용")
                 .type(REGULAR)
                 .likeCount(0)
-                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .deadLine(LocalDateTime.of(2024,4,3,10,10))
                 .level(NEWCOMER)
                 .build();
         jobPostingJpaRepository.save(jobPosting5);
@@ -132,7 +132,7 @@ public class initData {
                 .jobTitle("데이터분석 엔지니어")
                 .type(REGULAR)
                 .likeCount(0)
-                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .deadLine(LocalDateTime.of(2024,3,3,10,10))
                 .level(NEWCOMER)
                 .build();
         jobPostingJpaRepository.save(jobPosting6);
@@ -144,7 +144,7 @@ public class initData {
                 .jobTitle("ML엔지니어 채용")
                 .type(REGULAR)
                 .likeCount(0)
-                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .deadLine(LocalDateTime.of(2024,2,3,10,10))
                 .level(NEWCOMER)
                 .build();
         jobPostingJpaRepository.save(jobPosting7);
@@ -156,7 +156,7 @@ public class initData {
                 .jobTitle("결제시스템관리 백엔드")
                 .type(REGULAR)
                 .likeCount(0)
-                .deadLine(LocalDateTime.of(2024,1,3,10,10))
+                .deadLine(LocalDateTime.of(2024,4,3,10,10))
                 .level(NEWCOMER)
                 .build();
         jobPostingJpaRepository.save(jobPosting8);
