@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,20 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardSearchRepository boardSearchRepository;
     private final BoardPopularPostRepository boardPopularPostRepository;
+
+    private List<String> parseMembers(String membersString) {
+        List<String> members = Arrays.asList(membersString.split(","));
+        List<String> parsedMembers = new ArrayList<>();
+        // 최대 5명까지만 설정하고 나머지는 null로 채우기
+        for (int i = 0; i < 5; i++) {
+            if (i < members.size()) {
+                parsedMembers.add(members.get(i));
+            } else {
+                parsedMembers.add(null);
+            }
+        }
+        return parsedMembers;
+    }
     @Transactional
     public void save(BoardDto boardDTO) throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -44,11 +59,12 @@ public class BoardService {
         board.setProjectImage(boardDTO.getProjectImage());
         board.setDistribution(boardDTO.getDistribution());
         board.setGithub(boardDTO.getGithub());
-        board.setMember1(boardDTO.getMember1());
-        board.setMember2(boardDTO.getMember2());
-        board.setMember3(boardDTO.getMember3());
-        board.setMember4(boardDTO.getMember4());
-        board.setMember5(boardDTO.getMember5());
+        List<String> members = parseMembers(boardDTO.getMember1());
+        board.setMember1(members.get(0));
+        board.setMember2(members.get(1));
+        board.setMember3(members.get(2));
+        board.setMember4(members.get(3));
+        board.setMember5(members.get(4));
         board.setCategory(boardDTO.getCategory());
         board.setBoardLike(0);
         board.setWriter(currentUserEmail);
@@ -87,15 +103,10 @@ public class BoardService {
         existingBoard.setGithub(updatedBoardDto.getGithub());
         existingBoard.setProjectImage(updatedBoardDto.getProjectImage());
         existingBoard.setMember1(updatedBoardDto.getMember1());
-        existingBoard.setMember2(updatedBoardDto.getMember2());
-        existingBoard.setMember3(updatedBoardDto.getMember3());
-        existingBoard.setMember4(updatedBoardDto.getMember4());
-        existingBoard.setMember5(updatedBoardDto.getMember5());
         BoardDto boardDTO1 = objectMapper.readValue(boardDTO, BoardDto.class);
         Board board=new Board();
         board.setGithub(boardDTO1.getGithub());
         // 필요한 필드들을 추가적으로 업데이트해 나갈 수 있습니다.
-
         // 기존 게시물 엔터티를 저장
         boardRepository.save(existingBoard);
     }
