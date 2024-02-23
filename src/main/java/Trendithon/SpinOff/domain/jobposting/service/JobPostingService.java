@@ -35,7 +35,7 @@ public class JobPostingService {
     }
 
     public List<JobPosting> findByDeadlineAfter(LocalDateTime localDateTime) {
-        return jobPostingJpaRepository.findByDeadLineAfter(localDateTime);
+        return jobPostingJpaRepository.findAllByDeadLineAfter(localDateTime);
     }
 
     public List<JobPosting> findByLikedJobPosting(String memberId) {

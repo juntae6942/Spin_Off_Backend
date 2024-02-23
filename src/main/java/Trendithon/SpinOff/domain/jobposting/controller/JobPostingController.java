@@ -43,6 +43,7 @@ public class JobPostingController {
     public ResponseEntity<List<JobPosting>> getLikeJobPostings() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String memberId = authentication.getName();
+        log.info(memberId);
         List<JobPosting> likedJobPosting = jobPostingService.findByLikedJobPosting(memberId);
         log.info("liked Job Posting = {}", likedJobPosting.get(0));
         return ResponseEntity.ok().body(likedJobPosting);
